@@ -1,4 +1,4 @@
-# Getting Started
+# Environment Setup
 ## Required Installation
 1. Anaconda
 2. Spyder
@@ -22,3 +22,14 @@ Open MetaTrader5 and create a free demo accont
 - Chart the signals on the price chart 
 4. Performance Algorithm 
 - Calculate and analyze the resuls aquired from the signal algorithm thats a good step
+
+# Algorithmic Mindset and Functions
+
+## Benefits of Algorithmic Approach
+1. Speed
+- Algorithms run faster than humans with regard to execution and data analysis
+2. Discipline
+- Algorithms follow a distincxt set of rules and do not have feelings or emotions
+3. Percentage of error
+- Algorithms are generally error free and do not rely on human attention
+
