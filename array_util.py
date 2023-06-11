@@ -4,6 +4,7 @@ Created on Tue Jun  6 16:30:04 2023
 
 @author: zodyac
 """
+import numpy as np # Data analysis library
 
 
 # Adds a column to an arrau
@@ -14,7 +15,7 @@ def add_column(data, times) :
     #For each loop a new array is created containing zero values
     for i in range(1, times + 1) :
         # np.zeroes is a prebuild function that zeroes out the column
-        new = np.zeroes((len(data), 1), dtype = float)
+        new = np.zeros((len(data), 1), dtype = float)
         # adds the new zero array to the current data set
         # axis is the binary choice where 0=rows and 1=columns
         data = np.append(data, new, axis = 1)
@@ -39,7 +40,7 @@ def add_row(data, times) :
         # np.shpe() built in function gives out the number of rows, columns in the array
         columns = np.shape(data)[1]
         # np.zeroes is a prebuild function that zeroes out the row
-        new = np.zeroes((1, columns), dtype = float)
+        new = np.zeros((1, columns), dtype = float)
         # adds the new zero array to the current data set
         # axis is the binary choice where 0=rows and 1=column
         data = np.append(data, new, axis = 0)

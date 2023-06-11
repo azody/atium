@@ -9,7 +9,10 @@ Open MetaTrader5 and create a free demo accont
 
 ## Download MetaTrader 5 Dependencies
 > pip install Metatrader5
+
 > pip install pandas
+
+> pip install matplotlib
 
 
 # Core Concepts
