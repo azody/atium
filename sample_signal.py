@@ -17,6 +17,10 @@ A short signal is generate on the next open whenever
     4. The close price of the current bar must be lower than the close price 3 periods ago
 """
 
+from array_util import add_column
+from data_import import mass_import
+from chart_util import signal_chart
+
 # Signal function scans each row and leaves a trace if all conditions are met
 # Traces are buy and sell proxy orders
 # For OHLC Data
@@ -47,3 +51,19 @@ def signal(data) :
             pass
     
     return data
+
+
+# Choose an Asset
+pair = 0
+
+# Time frame
+horizon = "H1"
+
+# Importing the asset as an array
+my_data = mass_import(pair, horizon)
+
+# Calling the Signal Function
+my_data = signal(my_data)
+
+# Charting the latest 150 Signals
+signal_chart(my_data, 0, 4, 5, window = 150)
