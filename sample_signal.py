@@ -55,7 +55,7 @@ def signal(data) :
 
 
 # Choose an Asset
-pair = 2 #
+pair = 0 #
 
 # Time frame
 horizon = "H1"
