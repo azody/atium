@@ -4,12 +4,12 @@ Created on Thu Jun  8 15:56:04 2023
 
 @author: zodyac
 
-A long signal is generated on the next open whenever 
+A long signal is generated on the next open whenever
     1. When the current low is lower than the low price 5 seconds ago
     2. And the current low price is lower than the low price 13 seconds ago
     3. And the current low price higher than the low price 21 seconds ago
     4. The close price of the current of the current bar must be higher than the close price 3 periods ago
-    
+
 A short signal is generate on the next open whenever
     1. The current high price is higher than the high price 5 periods ago
     2. And the current high price is higher than the high price 13 periods ago
@@ -20,6 +20,7 @@ A short signal is generate on the next open whenever
 from array_util import add_column
 from data_import import mass_import
 from chart_util import signal_chart
+from performance import performance
 
 # Signal function scans each row and leaves a trace if all conditions are met
 # Traces are buy and sell proxy orders
@@ -28,13 +29,13 @@ from chart_util import signal_chart
 #   index 1 refers to the high price
 #   index 2 refers to the low price
 #   index 3 refers to the close price
-#For this specific signal
+# For this specific signal
 #   index 4 referst to the buy signal column
 #   index 5 refers to the sell signal column
 def signal(data) :
     # Add 2 columns
     data = add_column(data, 5)
-    
+
     for i in range(len(data)) :
         try:
             # Long Signal
@@ -49,12 +50,12 @@ def signal(data) :
                 data[i + 1, 5] = -1
         except IndexError:
             pass
-    
+
     return data
 
 
 # Choose an Asset
-pair = 0
+pair = 2 #
 
 # Time frame
 horizon = "H1"
@@ -67,3 +68,6 @@ my_data = signal(my_data)
 
 # Charting the latest 150 Signals
 signal_chart(my_data, 0, 4, 5, window = 150)
+
+# Get Performance Metrics
+my_data = performance(my_data, 0, 4, 5, 6, 7, 8)
