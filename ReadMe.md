@@ -54,7 +54,7 @@ Types
 Market Efficiency states that information is already embeddewd in the current price
 - Implies price and value are the same thing
 
-Charting Analysis
+## Charting Analysis
 - Bullish candlesticks have an open lower than the close
 - Bearish candlesticks have a close lower than the open
 
@@ -70,3 +70,46 @@ Support and Resistance
         Very Subjective but gives many interesting price levels
     - Pivot Points: Use simple mathematical formulas to find levels
     - Moving averages: Dynamic in nature nad follow the price
+
+## Indicator Analysis
+Types
+    1. Trend-following Indicators: Used to detet and trade a trending market where the movie is expected to continue
+        - Ex. Moving Average
+    2. Contraian Indicators: Used to fade the move and best used in sideways markets
+        - Ex. Relative Strength Index
+
+Moving Average
+- Most famous trend-following indicator
+- Easy to use and understand
+- Can use to find support, resistance, stop and target levels
+- Moving Average is commonly the rolling mean of the close price
+- Rule of Thumb
+    - Whenever the market is above moving averagfe, bullish momentum is in progress and you are better off looking for long oopurtunities
+    - Whenever the market is below moving average, bearish momentum
+    - When the market crosses, the market may be entering a new regime (trend)
+- Can combine moving averages
+    - Whenever a short term moving average crosses over a long term moving average, a golden cross is formed
+    - Opposite is a death cross
+
+Relative Strength Indicator
+- Most popular and most versatile bounded indicator
+- Steps to calculate 14-period RSI
+    1. Calculate the chaing in the closing prices from the previous ones
+    2. Seperate the positive net change from the negative net changes
+    3. Calculate a smoothed moving average on the positive net changes and on the absolute values of the negative net changes
+    4. Divide the smoothed positive changes by the smoothed absolute negative changes (This is the RS)
+    5. Apply this normalization formula for every time step to get the RSI
+- RSI = 100 - (100/ (1 + RS))
+- Smoothed Average is a special type of moving average developed by the creator of the RSI
+    - Smoother an dmore stable than the simple moving average
+- How to use
+    - Generally use a 14 RSI by default though it can vary
+    - Whenever the RSI is < 30, market is considered to be oversol and a correction to the upside can occur
+    - Whenever the RSI is > 70, market is considered to be over bough and a correction to the downside might occur
+    - Whenever the RSI surpasses or breaks the 50 level, a new trend might be emerging
+
+
+
+
+
+

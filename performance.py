@@ -90,3 +90,5 @@ def performance( data, open_price, buy_column, sell_column, long_result_col, sho
     print('Profit Factor           = ', profit_factor)
     print('Realized Risk Reward    = ', round(realized_risk_reward, 3))
     print('Number of Trades        = ', trades)
+
+    return data
