@@ -21,6 +21,7 @@ from array_util import add_column
 from data_import import mass_import
 from chart_util import signal_chart
 from performance import performance
+from indicator import moving_average, relative_strength_indicator
 
 # Signal function scans each row and leaves a trace if all conditions are met
 # Traces are buy and sell proxy orders
@@ -70,4 +71,20 @@ my_data = signal(my_data)
 signal_chart(my_data, 0, 4, 5, window = 150)
 
 # Get Performance Metrics
-my_data = performance(my_data, 0, 4, 5, 6, 7, 8)
+performance(my_data, 0, 4, 5, 6, 7, 8)
+
+# Get Moving Average
+my_data = add_column(my_data, 1)
+lookback = 30
+close_column = 3
+moving_average_column = 10
+my_data = moving_average(my_data, lookback, close_column, moving_average_column)
+
+# Get Relative Strength Index
+my_data = add_column(my_data, 1)
+lookback = 14
+close_column = 3
+position = 11
+# Follow up on this pieve later
+#my_data = relative_strength_indicator(my_data, lookback, close_column, close_column)
+
