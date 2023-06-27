@@ -72,6 +72,7 @@ def mass_import(asset, time_frame) :
         data = data.iloc[:, 1:5].values
         data = data.round(decimals = 5)
 
+
     return data
 
 
