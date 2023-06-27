@@ -16,6 +16,22 @@ If the close price is lower than the open price
     And the low price equals the close price
     Then add a bearish indicator
 
+
+Characteristics
+- Candles do not have any wicks
+    - Bullish has the same open as the low and the close as the high price
+    - Bearish has has the same open as the high price and the same close as the low price
+- Occurs during shorter time frames
+    - 1 and 5 minute charts
+Reasoning
+- Market Psychology
+    - Maximum force of demand is when there is only upward movement
+- Most powerful representation of bullish or bearish activity
+Nuances
+- May be difficult in some markets
+    - Currencies go out to 5 decimal places
+    - Consider rounding in this scenario
+
 """
 from data_import import mass_import
 from array_util import add_column
@@ -32,12 +48,18 @@ def signal(data, open_column, high_column, low_column, close_column, buy_column,
         try:
 
             # Bullish Pattern
-            if data[i, close_column] > data[i, open_column] and data[i, high_column] == data[i, close_column] and data[i, low_column] == data[i, open_column] and data[i, buy_column] == 0:
+            if data[i, close_column] > data[i, open_column] and \
+                data[i, high_column] == data[i, close_column] and \
+                data[i, low_column] == data[i, open_column] and \
+                data[i, buy_column] == 0:
 
                     data[i+1, buy_column] = 1
 
             # Bullish Pattern
-            if data[i, close_column] < data[i, open_column] and data[i, high_column] == data[i, open_column] and data[i, low_column] == data[i, close_column] and data[i, sell_column] == 0:
+            if data[i, close_column] < data[i, open_column] and \
+                data[i, high_column] == data[i, open_column] and \
+                data[i, low_column] == data[i, close_column] and \
+                data[i, sell_column] == 0:
 
                     data[i+1, sell_column] = -1
 

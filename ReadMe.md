@@ -158,25 +158,6 @@ Technical Analysis Best Practices
     - They have the most visibility to other traders
     - Want your configuration change to be seen by other traders
 
-# Classic Trend Following Patterns
-
-## Marubozu Pattern
-
-Characteristics
-- Candles do not have any wicks
-    - Bullish has the same open as the low and the close as the high price
-    - Bearish has has the same open as the high price and the same close as the low price
-- Occurs during shorter time frames
-    - 1 and 5 minute charts
-Reasoning
-- Market Psychology
-    - Maximum force of demand is when there is only upward movement
-- Most powerful representation of bullish or bearish activity
-Nuances
-- May be difficult in some markets
-    - Currencies go out to 5 decimal places
-    - Consider rounding in this scenario
-
 
 
 
