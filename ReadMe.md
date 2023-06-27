@@ -109,6 +109,55 @@ Relative Strength Indicator
     - Whenever the RSI surpasses or breaks the 50 level, a new trend might be emerging
 
 
+## Pattern Recognition
+Types
+    1. Classic Price Patterns: Technical reversal patterns, extremely subjective and difficult to backtest without subjective conditions
+    2. Timing Patternt: Combinatin of pricing and timing, less well known but can be powerful and predictive
+    3. Candlestick Patters: OHLC data
+
+Classic Patterns
+- Continuation price patterns: Configurations that confirm the aggregate ongoing move
+    - i.e. rectangles and triangles
+- Reversal Price Patterns: Configurations that fade the aggregate ongoing move
+    - i.e. Head and shoulders and double bottoms
+    - Double Bottom
+        - Chart Features
+            - The neckline: line linking the lowest low between two peaks and the geinning/end of the pattern
+                - Determines the pull back level
+            - The pull-backL new level where sellers will open short positions
+                - Theoretical optimal selling point
+            - Potential: miodpoint between the top of the pattern and the neckline
+        - Rationale: The market has failed to push prices above first peak and is howing weakness
+
+Pitfalls of Technical Analysis
+- Wanting to Get Rich Quickly: Psychological pitfall
+    - Lack of discipline and poor management
+    - Lack of faith may result in constant changing of strategy
+- Forcing patterns: Confirmation bias
+    - Prevents traders from seeing signals that contradict thesis
+- Hindsight Bias: What looks easy to spot in the past is harder in real time
+    - Backtesting almost always outperform forward testing
+    - Backtest using an unbiased algorithm to counteract
+- Assuming past events have the same future outcome
+    - History doesnt exactly repeat but it does generally rhyme
+- Making Things more complicated than they need to be
+    - Everything should be made as simple as possible but no simpler
+    - Avoid over fitting
+
+Technical Analysis Best Practices
+- Use Different Time Frames
+    - Longer time frame is always more important than the shorter time frame
+    - Principle of the alignment of planets: the more elements that confirm each other the better
+        - Analyze the market in at least three different time frames
+- Use more than one strategy or indicator
+    - Markets tend to trend sideways
+    - Do not use contrarian strateding in strongly trending markets
+    - Do not use trend following strategies in ranging markets
+    - Difficult to predict
+- Don't Underestimate Default Parameters
+    - They have the most visibility to other traders
+    - Want your configuration change to be seen by other traders
+
 
 
 
