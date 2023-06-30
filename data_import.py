@@ -59,7 +59,7 @@ def mass_import(asset, time_frame) :
         data = data.round(decimals = 5)
 
     if time_frame == 'D1' :
-        data = get_quotes(frame_D1, 2023, 1, 1, asset = assets[asset])
+        data = get_quotes(frame_D1, 2023, 3, 1, asset = assets[asset])
         data = data.iloc[:, 1:5].values
         data = data.round(decimals = 5)
 
@@ -77,14 +77,16 @@ def mass_import(asset, time_frame) :
 
 
 # import ETHUSD data
-my_data = mass_import(5, 'M1')
+#my_data = mass_import(5, 'M1')
 
-my_data_np = np.array(my_data)
+#my_data_np = np.array(my_data)
 
 # import GBPUSD data
-my_data = mass_import(2, 'H1')
+#my_data = mass_import(2, 'H1')
 
-my_data_np = np.array(my_data)
+#my_data_np = np.array(my_data)
 
+# import SP500m data
+my_data = mass_import(8, 'H1')
 
 
