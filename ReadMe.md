@@ -14,6 +14,10 @@ Open MetaTrader5 and create a free demo accont
 
 ' pip install matplotlib
 
+# Feature Ideas
+1. Make a common function for bear and bull candles
+2. I hate the indexing to field symbol
+
 
 # Core Concepts
 ## 4 key algorithm types

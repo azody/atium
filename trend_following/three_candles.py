@@ -64,13 +64,13 @@ def signal(data, open_column, close_column, buy_column, sell_column, min_body_si
                 data[i, close_column] > data[i - 1, close_column] and \
                 data[i - 1, close_column] > data[i - 2, close_column] and \
                 data[i - 2, close_column] > data[i - 3, close_column] and \
-                data[i, sell_column] == 0:
+                data[i, buy_column] == 0:
 
                     data[i+1, buy_column] = 1
             # Bearis Pattern
-            if data[i, close_column] - data[i, open_column] > min_body_size and \
-                data[i - 1, close_column] - data [i - 1, open_column] > min_body_size and \
-                data[i - 2, close_column] - data [i - 2, open_column] > min_body_size and \
+            if data[i, open_column] - data[i, close_column] > min_body_size and \
+                data[i - 1, open_column] - data [i - 1, close_column] > min_body_size and \
+                data[i - 2, open_column] - data [i - 2, close_column] > min_body_size and \
                 data[i, close_column] < data[i - 1, close_column] and \
                 data[i - 1, close_column] < data[i - 2, close_column] and \
                 data[i - 2, close_column] < data[i - 3, close_column] and \
@@ -84,7 +84,7 @@ def signal(data, open_column, close_column, buy_column, sell_column, min_body_si
 
 
 # Choose an Asset
-pair = 0 # EURUSD
+pair = 8 # EURUSD
 
 # Time frame
 horizon = "H1"
@@ -94,7 +94,7 @@ my_data = mass_import(pair, horizon)
 my_data = rounding(my_data, 5)
 
 # Calling the Signal Function
-min_body = 0.0005
+min_body = 10
 my_data = signal(my_data, 0, 3, 4, 5, min_body)
 
 # Charting the latest 150 Signals
