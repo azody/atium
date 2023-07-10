@@ -84,7 +84,7 @@ def signal(data, open_column, close_column, buy_column, sell_column, min_body_si
 
 
 # Choose an Asset
-pair = 8 # EURUSD
+pair = 0 # EURUSD
 
 # Time frame
 horizon = "H1"
