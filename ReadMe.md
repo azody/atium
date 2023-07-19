@@ -17,7 +17,16 @@ Open MetaTrader5 and create a free demo accont
 # Feature Ideas
 1. Make a common function for bear and bull candles
 2. I hate the indexing to field symbol
+3. Add linter
 
+# Signal Inventory
+1. Trend Following
+    - Classic Patterns
+        - Marubozu
+        - Three Candles
+        - Tasuki
+        - Three Methods
+        - Hikkake
 
 # Core Concepts
 ## 4 key algorithm types
