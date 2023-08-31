@@ -64,11 +64,11 @@ def mass_import(asset, time_frame) :
         data = data.round(decimals = 5)
 
     if time_frame == 'M1' :
-        data = get_quotes(frame_M1, 2023, 6, 10, asset = assets[asset])
+        data = get_quotes(frame_M1, 2023, 7, 10, asset = assets[asset])
         data = data.iloc[:, 1:5].values
         data = data.round(decimals = 5)
     if time_frame == 'M5' :
-        data = get_quotes(frame_M5, 2023, 6, 20, asset = assets[asset])
+        data = get_quotes(frame_M5, 2023, 8, 20, asset = assets[asset])
         data = data.iloc[:, 1:5].values
         data = data.round(decimals = 5)
 
