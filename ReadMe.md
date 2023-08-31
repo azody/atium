@@ -18,6 +18,7 @@ Open MetaTrader5 and create a free demo accont
 1. Make a common function for bear and bull candles
 2. I hate the indexing to field symbol
 3. Add linter
+4. Make signal function bear and bull expressions functions so that they can be easily pieced together to create new ideas
 
 # Signal Inventory
 1. Trend Following
@@ -27,7 +28,8 @@ Open MetaTrader5 and create a free demo accont
         - Tasuki
         - Three Methods
         - Hikkake
-
+    - Modern
+        - Quintuplets
 # Core Concepts
 ## 4 key algorithm types
 1. Import Algorithm

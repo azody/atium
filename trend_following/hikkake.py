@@ -48,7 +48,8 @@ def signal(data, open_column, high_column, low_column, close_column, buy_signal,
                 data[i - 4, close_column] > data[i - 4, open_column] :
 
                     data[i + 1, buy_signal] = 1
-
+            
+            # Bearish Pattern
             elif data[i, close_column] < data[i - 3, low_column] and \
                 data[i, close_column] < data[i - 4, close_column] and \
                 data[i - 1, high_column] > data[i, open_column] and \
