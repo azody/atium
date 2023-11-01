@@ -9,7 +9,6 @@ import datetime #  Tools for manipulating dates and times
 import pytz # Cross platform time zone calculations
 import pandas as pd # Data analysis Library
 import MetaTrader5 as mt5 # Metatrader5 api
-import numpy as np # Data analysis library
 
 # Create Universe of time frames
 frame_M1 = mt5.TIMEFRAME_M1 # 1-minute time frame
@@ -54,21 +53,21 @@ def get_quotes(time_frame, year = 2005, month = 1, day = 1, asset = "EURUSD") :
 
 def mass_import(asset, time_frame) :
     if time_frame == 'H1' :
-        data = get_quotes(frame_H1, 2023, 1, 1, asset = assets[asset])
+        data = get_quotes(frame_H1, 2023, 7, 1, asset = assets[asset])
         data = data.iloc[:, 1:5].values
         data = data.round(decimals = 5)
 
     if time_frame == 'D1' :
-        data = get_quotes(frame_D1, 2023, 3, 1, asset = assets[asset])
+        data = get_quotes(frame_D1, 2023, 7, 1, asset = assets[asset])
         data = data.iloc[:, 1:5].values
         data = data.round(decimals = 5)
 
     if time_frame == 'M1' :
-        data = get_quotes(frame_M1, 2023, 7, 10, asset = assets[asset])
+        data = get_quotes(frame_M1, 2023, 10, 10, asset = assets[asset])
         data = data.iloc[:, 1:5].values
         data = data.round(decimals = 5)
     if time_frame == 'M5' :
-        data = get_quotes(frame_M5, 2023, 8, 20, asset = assets[asset])
+        data = get_quotes(frame_M5, 2023, 10, 10, asset = assets[asset])
         data = data.iloc[:, 1:5].values
         data = data.round(decimals = 5)
 

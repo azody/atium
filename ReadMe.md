@@ -30,6 +30,10 @@ Open MetaTrader5 and create a free demo accont
         - Hikkake
     - Modern
         - Quintuplets
+        - Double Trouble
+        - Bottle
+        - Slingshot
+        - H
 # Core Concepts
 ## 4 key algorithm types
 1. Import Algorithm
