@@ -34,6 +34,28 @@ Open MetaTrader5 and create a free demo accont
         - Bottle
         - Slingshot
         - H
+2. Contrarian
+    - Classic Patterns
+        - Doji
+        - Harami
+        - On Neck
+        - Tweezers
+        - Stick Sandwhich
+        - Hammer
+        - Star
+        - Piercing
+        - Engulfing
+        - Abandoned Baby
+        - Spinning Top
+        - Inside Up/Down
+        - Tower
+    - Modern
+        - Doppelganger
+        - Blockade
+        - Euphoria
+        - Barrier
+        - Mirror
+        - Shrinking
 # Core Concepts
 ## 4 key algorithm types
 1. Import Algorithm
