@@ -53,7 +53,7 @@ def get_quotes(time_frame, year = 2005, month = 1, day = 1, asset = "EURUSD") :
 
 def mass_import(asset, time_frame) :
     if time_frame == 'H1' :
-        data = get_quotes(frame_H1, 2023, 7, 1, asset = assets[asset])
+        data = get_quotes(frame_H1, 2023, 10, 1, asset = assets[asset])
         data = data.iloc[:, 1:5].values
         data = data.round(decimals = 5)
 
