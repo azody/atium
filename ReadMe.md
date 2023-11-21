@@ -199,7 +199,31 @@ Technical Analysis Best Practices
     - They have the most visibility to other traders
     - Want your configuration change to be seen by other traders
 
+## Exit Techniques
+Symmeterical Exit Technique
+- Based on the size of the candle before entering
+- Distance of the high and the low of the key candlestick and projects it from one of the extremities (high or low)
+- Bullish Exit Price = Key Candle High - Key Candle Low + High Price
+- Bearish Exit Price = Key Candle High - (Key Candle High - Key Candle Low)
 
+Fixed Holding Period
+- Must exit afet a prespecified number of time periods
+
+Variable Holding Pattern
+- Must exit a pattern after encountering another pattern
+
+Hybrid Exit Technique
+- The symmeterical projection is calculated and is given a certain wiehg tbetween 1% and 99%
+- The variable holding period is monitored for every candlestick and is also given a certain weight
+    - Weight it the remainder of the first given weight
+    - If a counter pattern is discovered, sell the weights percentage of the position
+- Fixed holding period is used to fram the whole trade in a maximum duration scenario
+
+## Pattern Invalidation
+Fixed Stop-Losses
+    - A fixed level that liquidates the position if the market reaches the limit
+ATR-based Stop-Losses
+    - A level based on the values of the ATR, recommended to weight risk according to volatility
 
 
 
