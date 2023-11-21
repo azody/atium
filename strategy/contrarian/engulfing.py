@@ -14,7 +14,7 @@ Engulfing Pattern
 - Bearish Candle
     - First a bullish candle
     - Then a bearish candle
-        - Bearis candle completely engulfs the first candlestick in a strict way
+        - Bearish candle completely engulfs the first candlestick in a strict way
 """
 from data_import import mass_import
 from array_util import add_column
