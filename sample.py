@@ -45,7 +45,7 @@ def bottle_signal(data, open_column, high_column, low_column, close_column, buy_
 pair = "xrpusd"
 
 # Time frame
-horizon = "5m"
+horizon = "1m"
 
 # Importing the asset as an array
 my_data = gemini_candles_import(pair, horizon)
