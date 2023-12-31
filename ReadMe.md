@@ -19,6 +19,8 @@ Open MetaTrader5 and create a free demo accont
 2. I hate the indexing to field symbol
 3. Add linter
 4. Make signal function bear and bull expressions functions so that they can be easily pieced together to create new ideas
+5. Pattern and filters easy to plug and play
+    - ex. Double Trouble Pattern with an optional Filter of RSI
 
 # Signal Inventory
 1. Trend Following
@@ -56,6 +58,20 @@ Open MetaTrader5 and create a free demo accont
         - Barrier
         - Mirror
         - Shrinking
+
+# Indicator Inventory
+1. Moving Average
+2. Smoothed Moving Average
+3. Relative Strength Indicator
+
+# Volume and Volatility Strategies
+1. Trend Following
+    - Double Trouble with RSI
+    - Three Candles with Moving Average
+    - Bottle Pattern with Stochastic Oscillator
+    - Marubozu with Ks Volatility Bands
+    - H Patter with Trend Intensity Index
+
 # Core Concepts
 ## 4 key algorithm types
 1. Import Algorithm
