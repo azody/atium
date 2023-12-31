@@ -21,6 +21,7 @@ Open MetaTrader5 and create a free demo accont
 4. Make signal function bear and bull expressions functions so that they can be easily pieced together to create new ideas
 5. Pattern and filters easy to plug and play
     - ex. Double Trouble Pattern with an optional Filter of RSI
+6. Make Data Import Configureable on source to return the same thing
 
 # Signal Inventory
 1. Trend Following
