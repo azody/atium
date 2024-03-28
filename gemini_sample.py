@@ -42,7 +42,7 @@ def bottle_signal(data, open_column, high_column, low_column, close_column, buy_
 
 
 # Choose an Asset
-pair = "xrpusd"
+pair = "ethbtc"
 
 # Time frame
 horizon = "1m"
