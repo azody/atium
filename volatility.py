@@ -67,6 +67,25 @@ def stdev(data):
     return std_dev
 
 
+def volatility(data, lookback, close, position):
+
+    data = add_column(data, 1)
+
+    for i in range(len(data)):
+
+        try:
+
+            data[i, position] = (data[i - lookback + 1:i + 1, close].std())
+
+        except IndexError:
+
+            pass
+
+    data = delete_row(data, lookback)
+
+    return data
+
+
 def average_true_range(data, lookback, high_column, low_column, close_column, position):
 
     data = add_column(data, 1)
@@ -110,7 +129,7 @@ def k_volatility_band(data, lookback, multiplier, high, low, close, position):
     data = delete_column(data, position, 2)
 
     # Calculating maximum volatility
-    data = stdev(data, lookback, close, position + 1)
+    data = volatility(data, lookback, close, position + 1)
 
     for i in range(len(data)):
 
