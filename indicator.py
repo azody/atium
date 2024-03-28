@@ -70,3 +70,37 @@ def relative_strength_indicator(data, lookback, close, position) :
     data = delete_row(data, lookback)
 
     return data
+
+def stochastic_oscillator(data, lookback, high, low, close, position, slowing = False, smoothing = False, slowing_period = 1, smoothing_period = 1):
+
+    data = add_column(data, 1)
+
+    for i in range(len(data)):
+
+        try:
+
+            data[i, position] = (data[i, close] - min(data[i - lookback + 1:i + 1, low])) / (max(data[i - lookback + 1:i + 1, high]) - min(data[i - lookback + 1:i + 1, low]))
+
+        except ValueError:
+
+            pass
+
+    data[:, position] = data[:, position] * 100
+
+    if slowing == True and smoothing == False:
+
+        data = moving_average(data, slowing_period, position, position + 1)
+
+    if smoothing == True and slowing == False:
+
+        data = moving_average(data, smoothing_period, position, position + 1)
+
+    if smoothing == True and slowing == True:
+
+        data = moving_average(data, slowing_period, position,   position + 1)
+
+        data = moving_average(data, smoothing_period, position + 1, position + 2)
+
+    data = delete_row(data, lookback)
+
+    return data
