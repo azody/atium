@@ -88,3 +88,48 @@ def average_true_range(data, lookback, high_column, low_column, close_column, po
 
     data = delete_row(data, lookback)
     return data
+
+def k_volatility_band(data, lookback, multiplier, high, low, close, position):
+
+    data = add_column(data, 6)
+
+    # Calculating the median line
+    for i in range(len(data)):
+
+        try:
+
+            data[i, position] = max(data[i - lookback + 1:i + 1, high])
+            data[i, position + 1] = min(data[i - lookback + 1:i + 1, low])
+            data[i, position + 2] = (data[i, position] + data[i, position + 1]) / 2
+
+        except ValueError:
+
+            pass
+
+    # Cleaning
+    data = delete_column(data, position, 2)
+
+    # Calculating maximum volatility
+    data = stdev(data, lookback, close, position + 1)
+
+    for i in range(len(data)):
+
+        try:
+
+            data[i, position + 2] = max(data[i - lookback + 1:i + 1, position + 1])
+
+        except ValueError:
+
+            pass
+
+    # Cleaning
+    data = delete_column(data, position + 1, 1)
+
+    # Calculating the bands
+    data[:, position + 2] = data[:, position] + (multiplier * data[:, position + 1])
+    data[:, position + 3] = data[:, position] - (multiplier * data[:, position + 1])
+
+    # Cleaning
+    data = delete_column(data, position + 1, 1)
+
+    return data
