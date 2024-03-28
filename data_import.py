@@ -39,6 +39,7 @@ assets = ['EURUSD', 'USDCHF', 'GBPUSD', 'USCAD', 'BTCUSD', 'ETHUSD', 'XAUUSD', '
 
 
 def get_quotes(time_frame, year = 2005, month = 1, day = 1, asset = "EURUSD") :
+
     if not mt5.initialize() :
         print("initialize() failed, error code = ", mt5.last_error())
         quit()
