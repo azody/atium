@@ -104,3 +104,36 @@ def stochastic_oscillator(data, lookback, high, low, close, position, slowing = 
     data = delete_row(data, lookback)
 
     return data
+
+def trend_intensity_indicator(data, lookback, close_column, position):
+
+    data = add_column(data, 5)
+
+    # Calculating the Moving Average
+    data = moving_average(data, lookback, close_column, position)
+
+    # Deviations
+    for i in range(len(data)):
+
+        if data[i, close_column] > data[i, position]:
+            data[i, position + 1] = data[i, close_column] - data[i, position]
+
+        if data[i, close_column] < data[i, position]:
+            data[i, position + 2] = data[i, position] - data[i, close_column]
+
+    # Trend Intensity Index
+    for i in range(len(data)):
+
+        data[i, position + 3] = np.count_nonzero(data[i - lookback + 1:i + 1, position + 1])
+
+    for i in range(len(data)):
+
+        data[i, position + 4] = np.count_nonzero(data[i - lookback + 1:i + 1, position + 2])
+
+    for i in range(len(data)):
+
+        data[i, position + 5] = ((data[i, position + 3]) / (data[i, position + 3] + data[i, position + 4])) * 100
+
+    data = delete_column(data, position, 5)
+
+    return data
