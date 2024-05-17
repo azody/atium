@@ -46,7 +46,7 @@ Average True Range
         - Downward Trending
 """
 from array_util import add_column, delete_column, delete_row
-from indicator import smoothed_moving_average
+from indicator import smoothed_moving_average, moving_average, relative_strength_indicator
 import math
 
 def variance(data):
@@ -108,6 +108,20 @@ def average_true_range(data, lookback, high_column, low_column, close_column, po
     data = delete_row(data, lookback)
     return data
 
+def relative_strength_index_average_true_range(data, lookback_rsi, lookback_atr, lookback_rsi_atr, high, low, close, position):
+    data = relative_strength_indicator(data, lookback_rsi, close, position)
+
+    data = average_true_range(data, lookback_atr, high, low, close, position + 1)
+
+    data = add_column(data, 1)
+
+    data[:, position + 2] = data[:, position] / data[:, position + 1]
+
+    data = relative_strength_indicator(data, lookback_rsi_atr, position + 2, position + 3)
+
+    data = delete_column(data, position, 3)
+    return data
+
 def k_volatility_band(data, lookback, multiplier, high, low, close, position):
 
     data = add_column(data, 6)
@@ -149,6 +163,24 @@ def k_volatility_band(data, lookback, multiplier, high, low, close, position):
     data[:, position + 3] = data[:, position] - (multiplier * data[:, position + 1])
 
     # Cleaning
+    data = delete_column(data, position + 1, 1)
+
+    return data
+
+
+def bollinger_bands(data, lookback, standard_deviation, close, position):
+    data = add_column(data, 2)
+
+    # Calculating means
+    data = moving_average(data, lookback, close, position)
+
+    data = volatility(data, lookback, close, position + 1)
+
+    data[:, position + 2] = data[:, position] + (standard_deviation * data[:, position + 1])
+    data[:, position + 3] = data[:, position] - (standard_deviation * data[:, position + 1])
+
+    data = delete_row(data, lookback)
+
     data = delete_column(data, position + 1, 1)
 
     return data
