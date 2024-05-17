@@ -7,6 +7,7 @@ Created on Mon Jun 19 15:11:07 2023
 from array_util import add_column, delete_row, delete_column
 import numpy as np
 
+
 def moving_average(data, lookback, close, position) :
 
     # Add a column to store moving average
@@ -70,6 +71,11 @@ def relative_strength_indicator(data, lookback, close, position) :
     data = delete_row(data, lookback)
 
     return data
+
+
+
+
+
 
 def stochastic_oscillator(data, lookback, high, low, close, position, slowing = False, smoothing = False, slowing_period = 1, smoothing_period = 1):
 
@@ -135,5 +141,15 @@ def trend_intensity_indicator(data, lookback, close_column, position):
         data[i, position + 5] = ((data[i, position + 3]) / (data[i, position + 3] + data[i, position + 4])) * 100
 
     data = delete_column(data, position, 5)
+
+    return data
+
+
+def k_envelopes(data, lookback, high, low, position):
+    # Calculating the upper moving average
+    data = moving_average(data, lookback, high, position)
+
+    # Calculating the lower moving average
+    data = moving_average(data, lookback, low, position + 1)
 
     return data
