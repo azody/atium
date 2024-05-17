@@ -242,7 +242,58 @@ Fixed Stop-Losses
 ATR-based Stop-Losses
     - A level based on the values of the ATR, recommended to weight risk according to volatility
 
+## Risk Management
+Rules
+    - Always places stops and targets
 
+Stops and Targets
+    - Stop-Loss Order
+        - An automatic order set during trade initiation to ensure a minimum predetermined loss
+        - Trailing Stop
+            - Dynamic stop-loss order that follows the market whenever the price goes in the expected direction
+    - Take profit order (target)
+        - Pre determined price to sell at
 
+Position Sizing
+    - Choice in the number of contracts or lots to allocate for each trade
+    - Techniques
+        - Fixed amount: Invest the same amount regardless of capital or risk
+        - Percentage of portfolio: Always allocate the same percentage of the overall portfolio to each trade
+        - Conviction-wise: Subject techhnique based on degree of conviction
+        - Kelly Criterion: How much to invest based on historical results
+            - Kweight = W - ((1-W)/R)
+                - W: historical hit ration
+                - R: ration between the average gain and the average loss
+        - Hit Ratio Technique: based on clustering of performance
+            - Hit Ratio * Default Position Size
 
+Economic Calendars
+    - Risk Avoidance
+    - Big news event such as CPI result in wild unpredictable reactions
 
+## Behavioral Finance
+
+Cognitive Biases
+    - Biases that stem from a Lack of Knowledge
+    - Conservatism Bias: Slow to react to new information
+        - Be skeptical of basic analysis and be dynamic
+    - Confirmation Bias: Focus on information that confirms what is already believed
+        - Remain impartial and neutral
+    - Illusion of Control Bias: Overestimating control of the outcome
+        - Stay focused and humble
+    - Hindsight Bias: Overestimating past accuracy
+        - Consider all variables
+    - Anchoring Bias: when opinion is anchored to a certain base point
+        - Be open and dynamic
+    - Mental Accounting Bias: Assigning different values to the same amount of money bevcause it is in a different fund
+        - Treat all money as fungible
+    - Availability Bias: Selecting items based on how easy it is to retreive memories of them
+        - Do not trade the same asset because you are familiar with it
+    - Loss Aversion Bias: Pain of losing is greater than the joy of winning
+        - Automate risk management process
+Emotional Biases
+    - Biases driven by feelings and impulses
+    - Overconfidence Bias: Believes winning streak is due to superior skill
+        - Do not stray from strategy
+    - Regret-aversion Bias: preference to stay in a low-risk environment
+    - Endowment Bias: belief that owned assets are more valuable than the ones that are not ownedINT-
