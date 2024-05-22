@@ -25,7 +25,11 @@ impl From<ReqwestError> for DataImportError {
 }
 
 // Define an asynchronous function to fetch and parse the JSON response
-pub async fn gemini_data_import(url: &str) -> Result<Vec<Vec<f64>>, DataImportError> {
+pub async fn gemini_data_import(symbol: &str, time_frame: &str) -> Result<Vec<Vec<f64>>, DataImportError> {
+
+
+    let url = format!("https://api.gemini.com/v2/candles/{}/{}", symbol, time_frame); // replace with your actual URL
+
     // Send the GET request
     let response = reqwest::get(url).await?;
 
