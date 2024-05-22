@@ -1,24 +1,23 @@
-// Import the necessary modules
-use reqwest::Error;
+mod data_import;
 
-// Main asynchronous function
+use data_import::{gemini_data_import, DataImportError};
+
+
+
 #[tokio::main]
-async fn main() -> Result<(), Error> {
-    // Define the URL for the GET request
-    let url = "https://api.gemini.com/v2/candles/btcusd/1m";
-    println!("URL: {url}");
+async fn main() -> Result<(), DataImportError> {
+    let url = "https://api.gemini.com/v2/candles/btcusd/1m"; // replace with your actual URL
 
-    // Send the GET request and await the response
-    let response = reqwest::get(url).await?;
-
-    // Check if the response status is success
-    if response.status().is_success() {
-        // Parse the response text
-        let body = response.text().await?;
-        println!("Response Body: {}", body);
-    } else {
-        println!("Failed to fetch data. Status: {}", response.status());
+    match gemini_data_import(url).await {
+        Ok(nested_vec) => {
+            println!("Parsed nested arrays: {:?}", nested_vec);
+            Ok(())
+        }
+        Err(e) => {
+            println!("Error: {:?}", e);
+            Err(e)
+        }
     }
-
-    Ok(())
 }
+
+//let url = "https://api.gemini.com/v2/candles/btcusd/1m"; // replace with your actual URL
