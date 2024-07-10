@@ -14,13 +14,11 @@ async fn main() -> Result<(), DataImportError> {
     // Data is in format ["time", "open", "high", "low", "close", "volume"]
     let mut data  = gemini_data_import("btcusd", "1m").await?;
 
-    // data = add_column(data, 0.0);
-    // data = add_column(data, 0.0);
+    data = add_column(data, 0.0);
+    data = add_column(data, 0.0);
 
-    // let signal_data = signal(data, 1, 2, 3, 4, 6, 7);
-    //println !("Signal: {:?}", signal_data[0]);
-    println!("Data: {:?}", data.estimated_size());
-    print!("Example: {:?}", data.head(Some(3)));
+    let signal_data = signal(data, 1, 2, 3, 4, 6, 7);
+    println !("Signal: {:?}", signal_data[0]);
     Ok(())
 }
 
