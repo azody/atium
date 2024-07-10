@@ -1,6 +1,7 @@
 mod data_import;
 mod pattern;
 mod array_util;
+mod candle_utils;
 
 use array_util::add_column;
 use data_import::{gemini_data_import, DataImportError};
@@ -13,11 +14,13 @@ async fn main() -> Result<(), DataImportError> {
     // Data is in format ["time", "open", "high", "low", "close", "volume"]
     let mut data  = gemini_data_import("btcusd", "1m").await?;
 
-    data = add_column(data, 0.0);
-    data = add_column(data, 0.0);
+    // data = add_column(data, 0.0);
+    // data = add_column(data, 0.0);
 
-    let signal_data = signal(data, 1, 2, 3, 4, 6, 7);
-    println !("Signal: {:?}", signal_data[0]);
+    // let signal_data = signal(data, 1, 2, 3, 4, 6, 7);
+    //println !("Signal: {:?}", signal_data[0]);
+    println!("Data: {:?}", data.estimated_size());
+    print!("Example: {:?}", data.head(Some(3)));
     Ok(())
 }
 
