@@ -20,11 +20,9 @@ Nuances
     - Consider rounding in this scenario
 
 """
-from array_util import add_column
-
 def marubozu_bull_indicator(data, i: int, open_column: int, high_column: int, low_column: int, close_column: int) -> bool:
     """
-    Bullish Indicato Criteria
+    Bullish Indicator Criteria
         1. Open < Close - Bullish Candle
         2. High = Close - No Top Wick
         3. Low = Open   - No Bottom Wick
@@ -54,8 +52,6 @@ def marubozu_bear_indicator(data, i: int, open_column: int, high_column: int, lo
 
 def signal(data, open_column, high_column, low_column, close_column, buy_column, sell_column) :
     """Generates Bull and Bear Indicators for the Marubozu Signal"""
-
-    data = add_column(data, 5)
 
     for i in range(len(data)):
         try:
