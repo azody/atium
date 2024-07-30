@@ -21,7 +21,7 @@ my_data = mass_import(pair, horizon)
 my_data = add_column(my_data, 5)
 
 # Calling the Signal Function
-my_data = signal(my_data, 0, 3, 4, 5, 0.00005)
+my_data = signal(my_data, 0, 3, 4, 5, 0.0000001)
 
 # Charting the latest 150 Signals
 signal_chart(my_data, 0, 4, 5, window = 200)
