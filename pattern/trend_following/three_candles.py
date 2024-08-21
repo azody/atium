@@ -69,7 +69,7 @@ def three_candles_bear_indicator(data, i :int, open_column: int, close_column: i
     except IndexError:
         return False
         
-def signal(data, open_column, close_column, buy_column, sell_column, min_body_size) :
+def signal(data, open_column: int, close_column: int, buy_column: int, sell_column: int, min_body_size) :
     """Generates Bull and Bear Indicators for the Three Candles Signal"""
 
     for i in range(len(data)) :
