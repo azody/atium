@@ -6,7 +6,7 @@ from array_util import add_column
 from chart_util import signal_chart
 from performance import performance
 from rounding_util import rounding
-from pattern.trend_following.double_trouble import signal
+from pattern.trend_following.bottle import signal
 from volatility import average_true_range
 
 # Choose an Asset
@@ -24,10 +24,10 @@ my_data = add_column(my_data, 5)
 # Calling the Signal Function
 
 #my_data = rounding(my_data, 5)
-my_data = average_true_range(my_data, 10, 1, 2, 3, 4)
-my_data = signal(my_data, 0, 1, 2, 3, 4, 5, 6)
+#my_data = average_true_range(my_data, 10, 1, 2, 3, 4)
+my_data = signal(my_data, 0, 1, 2, 3, 4, 5)
 # Charting the latest 150 Signals
 signal_chart(my_data, 0, 4, 5, window = 200)
 
 # Get Performance Metrics
-my_data = performance(my_data, 0, 5, 6, 7, 8, 9)
+my_data = performance(my_data, 0, 4, 5, 6, 7, 8)
