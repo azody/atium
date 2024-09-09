@@ -42,7 +42,6 @@ def double_trouble_bear_indicator(data, i: int, open_column: int, high_column: i
     
 def signal(data, open_column, high_column, low_column, close_column, atr_column, buy_column, sell_column):
     """Generates Bull and Bear Indicators for the Double Trouble Pattern"""
-
     for i in range(len(data)):
 
         try:
