@@ -6,7 +6,7 @@ from array_util import add_column
 from chart_util import signal_chart
 from performance import performance
 from rounding_util import rounding
-from pattern.trend_following.slingshot import signal
+from pattern.contrarian.doji import signal
 from volatility import average_true_range
 
 # Choose an Asset

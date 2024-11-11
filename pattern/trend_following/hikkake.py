@@ -51,7 +51,8 @@ def hikkake_bear_indicator(data, i: int, open_column: int, high_column: int, low
         return False
     
 def signal(data, open_column, high_column, low_column, close_column, buy_signal, sell_signal) :
-    
+    """Generates Bull and Bear Indicators for the Hikkake Signal"""
+
     for i in range(len(data)) :
 
         try:
