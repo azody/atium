@@ -25,7 +25,7 @@ my_data = add_column(my_data, 5)
 
 #my_data = rounding(my_data, 5)
 #my_data = average_true_range(my_data, 10, 1, 2, 3, 4)
-my_data = signal(my_data, 0, 1, 2, 3, 4, 5)
+my_data = signal(my_data, 0, 3, 4, 5)
 # Charting the latest 150 Signals
 signal_chart(my_data, 0, 4, 5, window = 200)
 
