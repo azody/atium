@@ -1,17 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Created on Wed Nov  1 13:04:37 2023
-
-@author: zodyac
-
-
 Bottle Pattern
-- Bullish Pattern
-
-    - Psychology: No new low indicates bullish pressure
-- Bearish Pattern
-
-
 """
 def bottle_bull_indicator(data, i: int, open_column: int, low_column: int, close_column: int) -> bool:
     """
