@@ -16,11 +16,6 @@ Engulfing Pattern
     - Then a bearish candle
         - Bearish candle completely engulfs the first candlestick in a strict way
 """
-from data_import import mass_import
-from array_util import add_column
-from chart_util import signal_chart
-from performance import performance
-
 def signal(data, open_column, close_column, buy_column, sell_column):
 
     data = add_column(data, 5)
@@ -52,22 +47,3 @@ def signal(data, open_column, close_column, buy_column, sell_column):
             pass
 
     return data
-
-# Choose an Asset
-pair = 0 # EURUSD
-
-# Time frame
-horizon = "H1"
-
-# Importing the asset as an array
-my_data = mass_import(pair, horizon)
-
-
-# Calling the Signal Function
-my_data = signal(my_data, 0, 3, 4, 5)
-
-# Charting the latest 150 Signals
-signal_chart(my_data, 0, 4, 5, window = 200)
-
-# Get Performance Metrics
-performance(my_data, 0, 4, 5, 6, 7, 8)
