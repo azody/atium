@@ -26,7 +26,7 @@ Rounding
  - Use my_data = rounding(my_data, 0) for BTCUSD, ETHUSD, XAUUSD, SP500m, UK100
 
 """
-def hammer_buy_indicator(data, i: int, open_column: int, high_column: int, low_column: int, close_column: int, buy_column: int, sell_column: int, body, wick) -> bool:
+def hammer_buy_indicator(data, i: int, open_column: int, high_column: int, low_column: int, close_column: int, body, wick) -> bool:
     """
     Bullish Criteria
         1. A bullish candlestick with a long low wick and no high wick
@@ -41,7 +41,7 @@ def hammer_buy_indicator(data, i: int, open_column: int, high_column: int, low_c
     except IndexError:
         return False
     
-def hammer_bear_indicator(data, i: int, open_column: int, high_column: int, low_column: int, close_column: int, buy_column: int, sell_column: int, body, wick) -> bool:
+def hammer_bear_indicator(data, i: int, open_column: int, high_column: int, low_column: int, close_column: int, body, wick) -> bool:
     """
     Bearish Criteria
         1. A long high wick and no low wich
@@ -62,11 +62,11 @@ def signal(data, open_column, high_column, low_column, close_column, buy_column,
 
        try:
             # Bullish pattern
-            if hammer_buy_indicator(data, i, open_column, high_column, low_column, close_column, buy_column, sell_column, body, wick):
+            if hammer_buy_indicator(data, i, open_column, high_column, low_column, close_column, body, wick):
                 data[i + 1, buy_column] = 1
 
             # Bearish pattern
-            elif  hammer_bear_indicator(data, i, open_column, high_column, low_column, close_column, buy_column, sell_column, body, wick):
+            elif  hammer_bear_indicator(data, i, open_column, high_column, low_column, close_column, body, wick):
                 data[i + 1, sell_column] = -1
 
        except IndexError:
