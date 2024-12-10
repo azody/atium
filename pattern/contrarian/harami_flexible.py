@@ -3,7 +3,7 @@
 Harami Pattern
 - Contrarian Pttern where the body of the second candle is englobed by the body of the first candle
 """
-def harami_flexible_buy_indicator(data, i: int, open_column: int, high_column: int, low_column: int, close_column: int):
+def harami_flexible_bullish_indicator(data, i: int, open_column: int, high_column: int, low_column: int, close_column: int):
     """
     Bullish Criteria
         1. First candle is a bearish candle
@@ -22,7 +22,7 @@ def harami_flexible_buy_indicator(data, i: int, open_column: int, high_column: i
     except IndexError:
         return False
 
-def harami_flexible_bear_indicator(data, i: int, open_column: int, high_column: int, low_column: int, close_column: int):
+def harami_flexible_bearish_indicator(data, i: int, open_column: int, high_column: int, low_column: int, close_column: int):
     """
     Bearish Criteria
         1. The first candle is bulklish
@@ -47,11 +47,11 @@ def signal(data, open_column, high_column, low_column, close_column, buy_column,
 
        try:
             # Bullish pattern
-            if harami_flexible_buy_indicator(data, i, open_column, high_column, low_column, close_column):
+            if harami_flexible_bullish_indicator(data, i, open_column, high_column, low_column, close_column):
                 data[i + 1, buy_column] = 1
 
             # Bearish pattern
-            elif harami_flexible_buy_indicator(data, i, open_column, high_column, low_column, close_column):
+            elif harami_flexible_bearish_indicator(data, i, open_column, high_column, low_column, close_column):
                 data[i + 1, sell_column] = -1
 
        except IndexError:
