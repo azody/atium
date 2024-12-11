@@ -1,25 +1,8 @@
 # -*- coding: utf-8 -*-
 """
-Created on Tue Nov 21 11:25:30 2023
-
-@author: zodyac
-
 Inside Up/Down Pattern
 - Signals the end of an initial move
-- Bullish
-    - First a berish candle
-    - Second a smaller bullish candle
-        - Body must be contained in the bearish candle
-    - Third a bullish candle
-        - Must surpass the open of the first candle
-- Bearish
-    - First a bullish candle
-    - Second a smaller bearish candle
-        - Body must be contained in the bullish candle
-    - Third a bearish candle
-        - Must surpass the open of the first bullish candle
-
-Max body
+Max bodyII
 - Use body = 0.0005 for EURUSD, USDCHF, GBPUSD, USDCAD
 - Use body = 50 for BTCUSD
 - Use body = 10 for ETHUSD
@@ -27,66 +10,63 @@ Max body
 - Use body = 10 for SP500m, UK100
 
 """
-from data_import import mass_import
-from array_util import add_column
-from chart_util import signal_chart
-from performance import performance
-
-
-def signal(data, open_column, high_column, low_column, close_column, buy_column, sell_column, body):
-
-    data = add_column(data, 5)
-
-    for i in range(len(data)):
-
-       try:
-
-           # Bullish pattern
-           if data[i - 2, close_column] < data[i - 2, open_column] and \
+def inside_up_down_bullish_indicator(data, i: int, open_column: int, high_column: int, low_column: int, close_column: int, body):
+    """
+    Bullish Criteria
+        1. First a berish candle
+        2. Second a smaller bullish candle
+        3. Second candle body must be contained in the bearish candle
+        4. Third a bullish candle
+        5. Third candle must surpass the open of the first candle
+    """
+    try:
+        return data[i - 2, close_column] < data[i - 2, open_column] and \
               abs(data[i - 2, open_column] - data[i - 2, close_column]) > body and \
               data[i - 1, close_column] < data[i - 2, open_column] and \
               data[i - 1, open_column] > data[i - 2, close_column] and \
               data[i - 1, close_column] > data[i - 1, open_column] and \
               data[i, close_column] > data[i - 2, open_column] and \
               data[i, close_column] > data[i, open_column] and \
-              abs(data[i, open_column] - data[i, close_column]) > body:
+              abs(data[i, open_column] - data[i, close_column]) > body
+    except IndexError:
+        return False
 
-                    data[i + 1, buy_column] = 1
-
-           # Bearish pattern
-           elif data[i - 2, close_column] > data[i - 2, open_column] and \
+def inside_up_down_bearish_indicator(data, i: int, open_column: int, high_column: int, low_column: int, close_column: int, body):
+    """
+    Bearish Criteria
+        1. First a bullish candle
+        2. Second a smaller bearish candle
+        3. Second candle body must be contained in the bullish candle
+        4. Third a bearish candle
+        5. Third candle must surpass the open of the first bullish candlea
+    """
+    try:
+        return data[i - 2, close_column] > data[i - 2, open_column] and \
                 abs(data[i - 2, close_column] - data[i - 2, open_column]) > body and \
                 data[i - 1, close_column] > data[i - 2, open_column] and \
                 data[i - 1, open_column] < data[i - 2, close_column] and \
                 data[i - 1, close_column] < data[i - 1, open_column] and \
                 data[i, close_column] < data[i - 2, open_column] and \
                 data[i, close_column] < data[i, open_column] and \
-                abs(data[i, open_column] - data[i, close_column]) > body:
+                abs(data[i, open_column] - data[i, close_column]) > body
+    except IndexError:
+        return False
 
-                    data[i + 1, sell_column] = -1
+def signal(data, open_column, high_column, low_column, close_column, buy_column, sell_column, body):
+
+    for i in range(len(data)):
+
+       try:
+           # Bullish pattern
+           if inside_up_down_bullish_indicator(data, i, open_column, high_column, low_column, close_column, body):
+                data[i + 1, buy_column] = 1
+
+           # Bearish pattern
+           elif inside_up_down_bearish_indicator(data, i, open_column, high_column, low_column, close_column, body):
+                data[i + 1, sell_column] = -1
 
        except IndexError:
 
             pass
 
     return data
-
-# Choose an Asset
-pair = 0 # EURUSD
-
-# Time frame
-horizon = "H1"
-
-# Importing the asset as an array
-my_data = mass_import(pair, horizon)
-
-
-# Calling the Signal Function
-body = 0.0005
-my_data = signal(my_data, 0, 1, 2, 3, 4, 5, body)
-
-# Charting the latest 150 Signals
-signal_chart(my_data, 0, 4, 5, window = 200)
-
-# Get Performance Metrics
-performance(my_data, 0, 4, 5, 6, 7, 8)

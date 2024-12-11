@@ -1,9 +1,5 @@
 # -*- coding: utf-8 -*-
 """
-Created on Tue Nov  7 11:15:53 2023
-
-@author: zodyac
-
 Harami Pattern
 - Contrarian Pttern where the body of the second candle is englobed by the body of the first candle
 - Difficult to find and backtest
