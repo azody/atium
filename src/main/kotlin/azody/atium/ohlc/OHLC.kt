@@ -15,6 +15,8 @@ fun OHLC.isBullish(): Boolean = close > open
 
 fun OHLC.isBearish(): Boolean = close < open
 
+fun OHLC.isIndecision(): Boolean = open == close
+
 fun OHLC.height(): Double = high - low
 
 fun OHLC.body(): Double = abs(close - open)
