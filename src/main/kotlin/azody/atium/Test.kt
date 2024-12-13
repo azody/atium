@@ -1,4 +1,3 @@
 package azody.atium
 
-class Test {
-}
+class Test
