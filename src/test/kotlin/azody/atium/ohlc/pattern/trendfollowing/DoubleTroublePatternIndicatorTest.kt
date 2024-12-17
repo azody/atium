@@ -1,7 +1,7 @@
 package azody.atium.ohlc.pattern.trendfollowing
 
+import azody.atium.domain.OHLC
 import azody.atium.domain.VolatilityIndicator
-import azody.atium.ohlc.OHLC
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 

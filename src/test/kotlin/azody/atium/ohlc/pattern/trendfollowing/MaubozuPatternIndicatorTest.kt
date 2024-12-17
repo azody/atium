@@ -1,6 +1,6 @@
 package azody.atium.ohlc.pattern.trendfollowing
 
-import azody.atium.ohlc.OHLC
+import azody.atium.domain.OHLC
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 

@@ -2,8 +2,7 @@
 
 package azody.atium.ohlc.pattern.trendfollowing
 
-import azody.atium.domain.Indicator
-import azody.atium.ohlc.*
+import azody.atium.domain.*
 
 /**
  * Hikkake pattern

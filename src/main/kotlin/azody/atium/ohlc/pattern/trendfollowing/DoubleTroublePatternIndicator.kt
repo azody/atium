@@ -1,11 +1,11 @@
 package azody.atium.ohlc.pattern.trendfollowing
 
 import azody.atium.domain.Indicator
+import azody.atium.domain.OHLC
 import azody.atium.domain.VolatilityIndicator
-import azody.atium.ohlc.OHLC
-import azody.atium.ohlc.height
-import azody.atium.ohlc.isBearish
-import azody.atium.ohlc.isBullish
+import azody.atium.domain.height
+import azody.atium.domain.isBearish
+import azody.atium.domain.isBullish
 
 /**
  * Double Trouble Pattern

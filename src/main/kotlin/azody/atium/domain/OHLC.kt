@@ -1,6 +1,5 @@
-package azody.atium.ohlc
+package azody.atium.domain
 
-import azody.atium.domain.VolatilityIndicator
 import kotlin.math.abs
 
 data class OHLC(
@@ -22,3 +21,7 @@ fun OHLC.embeds(ohlc: OHLC): Boolean = ohlc.high < this.high && ohlc.low > this.
 fun OHLC.height(): Double = high - low
 
 fun OHLC.body(): Double = abs(close - open)
+
+enum class OHLCParameter {
+    MAX_BODY_HEIGHT,
+}
