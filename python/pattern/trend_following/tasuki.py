@@ -24,7 +24,7 @@ Reasoning
     - Not enough pressure to reach the previous threshold
 Nuances
 - Rarely occurs
-- Intuitive but not neccesarily accurate
+- Intuitive but not necessarily accurate
 
 """
 def tasuki_bull_indicator(data, i:int, open_column: int, close_column: int) -> bool:
@@ -50,7 +50,7 @@ def tasuki_bear_indicator(data, i:int, open_column: int, close_column: int) -> b
     """
     Bearish Indicator
         1. The close price from two periods ago is lower than the open price from two periods ago
-        2. The open price from one period ago is lower than the sloce two periods ago
+        2. The open price from one period ago is lower than the close two periods ago
         3. The close price from one period is greater than the open price from one period ago
         4. The current close price is greater than the close price two periods ago
     """

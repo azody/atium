@@ -54,7 +54,7 @@ object SlingshotPatternIndicator : Indicator {
             val firstCandle = data[i - 3]
             val secondCandle = data[i - 2]
             val thirdCandle = data[i - 1]
-            val fourthCandle = data[i - 0]
+            val fourthCandle = data[i]
             return fourthCandle.close < thirdCandle.low &&
                 fourthCandle.close < secondCandle.low &&
                 fourthCandle.high >= firstCandle.low &&
