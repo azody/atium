@@ -11,7 +11,6 @@ def slingshot_bull_indicator(data, i: int, open_column: int, high_column: int, l
         2. Followed by a higher one confirming a bullish bias
         3. Third candle not surpassing the high of the second
         4. Final candle that must have a low at or below the high of the first candletick and a close higher than that of the second candlestick
-        5. Color of the second and third candles does not matter
     """
     try:
         return data[i, close_column] > data[i - 1, high_column] and \
