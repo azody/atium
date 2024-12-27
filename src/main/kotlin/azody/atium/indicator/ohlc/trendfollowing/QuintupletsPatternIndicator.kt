@@ -1,6 +1,6 @@
 @file:Suppress("ktlint:standard:no-wildcard-imports")
 
-package azody.atium.ohlc.pattern.trendfollowing
+package azody.atium.indicator.ohlc.trendfollowing
 
 import azody.atium.domain.*
 

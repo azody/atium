@@ -1,4 +1,4 @@
-package azody.atium.ohlc.pattern.trendfollowing
+package azody.atium.indicator.ohlc.trendfollowing
 
 import azody.atium.domain.OHLC
 import azody.atium.domain.OHLCParameter
@@ -17,7 +17,11 @@ class QuintupletsPatternIndicatorTest :
                     OHLC(5.0, 6.5, 4.5, 6.0),
                 )
 
-            QuintupletsPatternIndicator.bullIndicator(data, 4, mapOf(OHLCParameter.MAX_BODY_HEIGHT.toString() to 2.0)) shouldBe true
+            QuintupletsPatternIndicator.bullIndicator(
+                data,
+                4,
+                mapOf(OHLCParameter.MAX_BODY_HEIGHT.toString() to 2.0),
+            ) shouldBe true
         }
 
         test("Negative Test for Bullish Quintuplets Pattern") {
@@ -30,7 +34,11 @@ class QuintupletsPatternIndicatorTest :
                     OHLC(5.0, 6.5, 4.5, 6.0),
                 )
 
-            QuintupletsPatternIndicator.bullIndicator(data, 4, mapOf(OHLCParameter.MAX_BODY_HEIGHT.toString() to 1.0)) shouldBe false
+            QuintupletsPatternIndicator.bullIndicator(
+                data,
+                4,
+                mapOf(OHLCParameter.MAX_BODY_HEIGHT.toString() to 1.0),
+            ) shouldBe false
         }
         test("Negative Test for Bullish Quintuplets Pattern - Index Out of Bounds") {
             val data =
@@ -42,7 +50,11 @@ class QuintupletsPatternIndicatorTest :
                     OHLC(5.0, 6.5, 4.5, 6.0),
                 )
 
-            QuintupletsPatternIndicator.bullIndicator(data, 3, mapOf(OHLCParameter.MAX_BODY_HEIGHT.toString() to 1.0)) shouldBe false
+            QuintupletsPatternIndicator.bullIndicator(
+                data,
+                3,
+                mapOf(OHLCParameter.MAX_BODY_HEIGHT.toString() to 1.0),
+            ) shouldBe false
         }
         test("Positive Test for Bearish Quintuplets Pattern") {
             val data =
@@ -54,7 +66,11 @@ class QuintupletsPatternIndicatorTest :
                     OHLC(2.0, 2.5, 0.5, 1.0),
                 )
 
-            QuintupletsPatternIndicator.bearIndicator(data, 4, mapOf(OHLCParameter.MAX_BODY_HEIGHT.toString() to 2.0)) shouldBe true
+            QuintupletsPatternIndicator.bearIndicator(
+                data,
+                4,
+                mapOf(OHLCParameter.MAX_BODY_HEIGHT.toString() to 2.0),
+            ) shouldBe true
         }
 
         test("Negative Test for Bearish Quintuplets Pattern") {
@@ -67,7 +83,11 @@ class QuintupletsPatternIndicatorTest :
                     OHLC(2.0, 2.5, 0.5, 1.0),
                 )
 
-            QuintupletsPatternIndicator.bearIndicator(data, 4, mapOf(OHLCParameter.MAX_BODY_HEIGHT.toString() to 1.0)) shouldBe false
+            QuintupletsPatternIndicator.bearIndicator(
+                data,
+                4,
+                mapOf(OHLCParameter.MAX_BODY_HEIGHT.toString() to 1.0),
+            ) shouldBe false
         }
         test("Negative Test for Bearish Quintuplets Pattern - Index Out of Bounds") {
             val data =
@@ -79,6 +99,10 @@ class QuintupletsPatternIndicatorTest :
                     OHLC(2.0, 2.5, 0.5, 1.0),
                 )
 
-            QuintupletsPatternIndicator.bearIndicator(data, 3, mapOf(OHLCParameter.MAX_BODY_HEIGHT.toString() to 1.0)) shouldBe false
+            QuintupletsPatternIndicator.bearIndicator(
+                data,
+                3,
+                mapOf(OHLCParameter.MAX_BODY_HEIGHT.toString() to 1.0),
+            ) shouldBe false
         }
     })

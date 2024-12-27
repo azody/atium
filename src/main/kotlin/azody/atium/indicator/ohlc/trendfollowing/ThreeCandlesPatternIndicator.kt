@@ -1,4 +1,4 @@
-package azody.atium.ohlc.pattern.trendfollowing
+package azody.atium.indicator.ohlc.trendfollowing
 
 import azody.atium.domain.*
 

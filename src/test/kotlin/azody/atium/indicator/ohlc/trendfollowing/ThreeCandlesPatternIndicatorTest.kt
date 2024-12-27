@@ -1,4 +1,4 @@
-package azody.atium.ohlc.pattern.trendfollowing
+package azody.atium.indicator.ohlc.trendfollowing
 
 import azody.atium.domain.OHLC
 import azody.atium.domain.OHLCParameter
@@ -15,7 +15,11 @@ class ThreeCandlesPatternIndicatorTest :
                     OHLC(7.0, 11.0, 6.0, 10.0),
                     OHLC(8.0, 12.0, 7.0, 11.0),
                 )
-            ThreeCandlesPatternIndicator.bullIndicator(data, 3, mapOf(OHLCParameter.MIN_BODY_HEIGHT.toString() to 0.5)) shouldBe true
+            ThreeCandlesPatternIndicator.bullIndicator(
+                data,
+                3,
+                mapOf(OHLCParameter.MIN_BODY_HEIGHT.toString() to 0.5),
+            ) shouldBe true
         }
         test("Negative Test for Three Candles Pattern Bullish Indicator") {
             val data =
@@ -25,7 +29,11 @@ class ThreeCandlesPatternIndicatorTest :
                     OHLC(7.0, 11.0, 6.0, 10.0),
                     OHLC(8.0, 12.0, 7.0, 11.0),
                 )
-            ThreeCandlesPatternIndicator.bullIndicator(data, 3, mapOf(OHLCParameter.MIN_BODY_HEIGHT.toString() to 0.5)) shouldBe false
+            ThreeCandlesPatternIndicator.bullIndicator(
+                data,
+                3,
+                mapOf(OHLCParameter.MIN_BODY_HEIGHT.toString() to 0.5),
+            ) shouldBe false
         }
         test("Negative Test for Three Candles Pattern Bullish Indicator - Index Out of Bounds Exception") {
             val data =
@@ -35,7 +43,11 @@ class ThreeCandlesPatternIndicatorTest :
                     OHLC(7.0, 11.0, 6.0, 10.0),
                     OHLC(8.0, 12.0, 7.0, 11.0),
                 )
-            ThreeCandlesPatternIndicator.bullIndicator(data, 2, mapOf(OHLCParameter.MIN_BODY_HEIGHT.toString() to 0.5)) shouldBe false
+            ThreeCandlesPatternIndicator.bullIndicator(
+                data,
+                2,
+                mapOf(OHLCParameter.MIN_BODY_HEIGHT.toString() to 0.5),
+            ) shouldBe false
         }
         test("Positive Test for Three Candles Pattern Bearish Indicator - Index Out of Bounds Exception") {
             val data =
@@ -45,7 +57,11 @@ class ThreeCandlesPatternIndicatorTest :
                     OHLC(8.0, 9.0, 5.0, 6.0),
                     OHLC(7.0, 8.0, 4.0, 5.0),
                 )
-            ThreeCandlesPatternIndicator.bearIndicator(data, 3, mapOf(OHLCParameter.MIN_BODY_HEIGHT.toString() to 0.5)) shouldBe true
+            ThreeCandlesPatternIndicator.bearIndicator(
+                data,
+                3,
+                mapOf(OHLCParameter.MIN_BODY_HEIGHT.toString() to 0.5),
+            ) shouldBe true
         }
         test("Negative Test for Three Candles Pattern Bearish Indicator") {
             val data =
@@ -55,7 +71,11 @@ class ThreeCandlesPatternIndicatorTest :
                     OHLC(8.0, 9.0, 5.0, 6.0),
                     OHLC(7.0, 8.0, 4.0, 5.0),
                 )
-            ThreeCandlesPatternIndicator.bearIndicator(data, 3, mapOf(OHLCParameter.MIN_BODY_HEIGHT.toString() to 0.5)) shouldBe false
+            ThreeCandlesPatternIndicator.bearIndicator(
+                data,
+                3,
+                mapOf(OHLCParameter.MIN_BODY_HEIGHT.toString() to 0.5),
+            ) shouldBe false
         }
         test("Negative Test for Three Candles Pattern Bearish Indicator - Index Out of Bounds Exception") {
             val data =
@@ -65,6 +85,10 @@ class ThreeCandlesPatternIndicatorTest :
                     OHLC(8.0, 9.0, 5.0, 6.0),
                     OHLC(7.0, 8.0, 4.0, 5.0),
                 )
-            ThreeCandlesPatternIndicator.bearIndicator(data, 2, mapOf(OHLCParameter.MIN_BODY_HEIGHT.toString() to 0.5)) shouldBe false
+            ThreeCandlesPatternIndicator.bearIndicator(
+                data,
+                2,
+                mapOf(OHLCParameter.MIN_BODY_HEIGHT.toString() to 0.5),
+            ) shouldBe false
         }
     })
