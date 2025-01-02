@@ -14,7 +14,7 @@ fun OHLC.isBullish(): Boolean = close > open
 
 fun OHLC.isBearish(): Boolean = close < open
 
-fun OHLC.isIndecision(): Boolean = open == close
+fun OHLC.isDoji(): Boolean = open == close
 
 fun OHLC.embeds(ohlc: OHLC): Boolean = ohlc.high < this.high && ohlc.low > this.low
 
