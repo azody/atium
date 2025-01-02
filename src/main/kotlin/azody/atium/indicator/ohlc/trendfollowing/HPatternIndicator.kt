@@ -28,7 +28,7 @@ object HPatternIndicator : Indicator {
             val thirdCandle = data[i]
 
             return firstCandle.isBullish() &&
-                secondCandle.isIndecision() &&
+                secondCandle.isDoji() &&
                 thirdCandle.isBullish() &&
                 thirdCandle.close > secondCandle.close &&
                 thirdCandle.low > secondCandle.low
@@ -57,7 +57,7 @@ object HPatternIndicator : Indicator {
             val thirdCandle = data[i]
 
             return firstCandle.isBearish() &&
-                secondCandle.isIndecision() &&
+                secondCandle.isDoji() &&
                 thirdCandle.isBearish() &&
                 thirdCandle.close < secondCandle.close &&
                 thirdCandle.high < secondCandle.high

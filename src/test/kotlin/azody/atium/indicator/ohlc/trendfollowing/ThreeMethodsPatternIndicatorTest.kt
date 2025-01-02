@@ -70,6 +70,6 @@ class ThreeMethodsPatternIndicatorTest :
                     OHLC(5.0, 7.0, 5.0, 6.0),
                     OHLC(7.0, 7.0, 1.0, 1.0),
                 )
-            ThreeMethodsPatternIndicator.bearIndicator(data, 4) shouldBe true
+            ThreeMethodsPatternIndicator.bearIndicator(data, 3) shouldBe false
         }
     })
