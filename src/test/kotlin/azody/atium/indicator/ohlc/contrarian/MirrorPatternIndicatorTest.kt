@@ -56,7 +56,7 @@ class MirrorPatternIndicatorTest :
                 )
             MirrorPatternIndicator.bearIndicator(data, 3) shouldBe false
         }
-        test("Negatve Test for Mirror Bearish Indicator - Index Out of Bounds") {
+        test("Negative Test for Mirror Bearish Indicator - Index Out of Bounds") {
             val data =
                 listOf(
                     OHLC(5.0, 12.0, 3.0, 10.0),
