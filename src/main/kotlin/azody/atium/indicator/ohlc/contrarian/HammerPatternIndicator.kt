@@ -4,7 +4,7 @@ import azody.atium.domain.*
 
 /**
  * Hammer Pattern
- * - One of 4 simliar patterns
+ * - One of 4 similar patterns
  *     - Shooting Star, hanging Man, Hammer and Inverted Hammer
  * - Single candle configuration
  * - Logic
@@ -44,8 +44,8 @@ object HammerPatternIndicator : Indicator {
             val secondCandle = data[i - 1] // Hammer Candle
             val thirdCandle = data[i]
 
-            val minWickSize = options.get(OHLCParameter.WICK_SIZE.toString())!! // TODO: Handle Error Better
-            val maxBodySize = options.get(OHLCParameter.MAX_BODY_HEIGHT.toString())!! // TODO: Handle Error Better
+            val minWickSize = options[OHLCParameter.WICK_SIZE.toString()]!! // TODO: Handle Error Better
+            val maxBodySize = options[OHLCParameter.MAX_BODY_HEIGHT.toString()]!! // TODO: Handle Error Better
 
             return firstCandle.isBearish() &&
                 secondCandle.isBullish() &&
@@ -60,7 +60,7 @@ object HammerPatternIndicator : Indicator {
 
     /**
      *  Bearish Criteria
-     *      1. A long high wick and no low wich
+     *      1. A long high wick and no low wick
      *      2. It also must have a relatively small body
      */
     override fun bearIndicator(
@@ -73,8 +73,8 @@ object HammerPatternIndicator : Indicator {
             val secondCandle = data[i - 1] // Hammer Candle
             val thirdCandle = data[i]
 
-            val minWickSize = options.get(OHLCParameter.WICK_SIZE.toString())!! // TODO: Handle Error Better
-            val maxBodySize = options.get(OHLCParameter.MAX_BODY_HEIGHT.toString())!! // TODO: Handle Error Better
+            val minWickSize = options[OHLCParameter.WICK_SIZE.toString()]!! // TODO: Handle Error Better
+            val maxBodySize = options[OHLCParameter.MAX_BODY_HEIGHT.toString()]!! // TODO: Handle Error Better
 
             return firstCandle.isBullish() &&
                 secondCandle.isBearish() &&

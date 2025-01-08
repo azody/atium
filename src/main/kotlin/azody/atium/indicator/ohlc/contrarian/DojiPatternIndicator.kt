@@ -6,7 +6,7 @@ import azody.atium.domain.*
  * Doji Pattern
  * - Most well known and intuitive candle pattern
  * - Rational
- *     - Doji candle is the quiliibrium between supply and demand before a reversal
+ *     - Doji candle is the equiliibrium between supply and demand before a reversal
  * - Variants
  *     - Dragonfly Doji: High price equal to the close and open price
  *     - Gravestone Doji: Low price is equal to close and open price
