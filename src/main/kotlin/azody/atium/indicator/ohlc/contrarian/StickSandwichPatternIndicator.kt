@@ -45,13 +45,17 @@ object StickSandwichPatternIndicator : Indicator {
         i: Int,
         options: Map<String, Double>,
     ): Boolean {
-        val firstCandle = data[i - 2]
-        val secondCandle = data[i - 1]
-        val thirdCandle = data[i]
-        return firstCandle.isBullish() &&
-            secondCandle.isBearish() &&
-            secondCandle.body() < firstCandle.body() &&
-            thirdCandle.isBullish() &&
-            thirdCandle.body() > secondCandle.body()
+        try {
+            val firstCandle = data[i - 2]
+            val secondCandle = data[i - 1]
+            val thirdCandle = data[i]
+            return firstCandle.isBullish() &&
+                secondCandle.isBearish() &&
+                secondCandle.body() < firstCandle.body() &&
+                thirdCandle.isBullish() &&
+                thirdCandle.body() > secondCandle.body()
+        } catch (e: IndexOutOfBoundsException) {
+            return false
+        }
     }
 }
