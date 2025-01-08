@@ -25,4 +25,5 @@ fun OHLC.body(): Double = abs(close - open)
 enum class OHLCParameter {
     MAX_BODY_HEIGHT,
     MIN_BODY_HEIGHT,
+    WICK_SIZE,
 }
