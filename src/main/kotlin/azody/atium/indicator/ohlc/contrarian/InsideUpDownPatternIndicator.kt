@@ -31,7 +31,7 @@ object InsideUpDownPatternIndicator : Indicator {
             val secondCandle = data[i - 1] // Hammer Candle
             val thirdCandle = data[i]
 
-            val maxBodySize = options.get(OHLCParameter.MAX_BODY_HEIGHT.toString())!! // TODO: Handle Error Better
+            val maxBodySize = options[OHLCParameter.MAX_BODY_HEIGHT.toString()]!! // TODO: Handle Error Better
 
             return firstCandle.isBearish() &&
                 secondCandle.isBullish() &&
@@ -63,7 +63,7 @@ object InsideUpDownPatternIndicator : Indicator {
             val secondCandle = data[i - 1] // Hammer Candle
             val thirdCandle = data[i]
 
-            val maxBodySize = options.get(OHLCParameter.MAX_BODY_HEIGHT.toString())!! // TODO: Handle Error Better
+            val maxBodySize = options[OHLCParameter.MAX_BODY_HEIGHT.toString()]!! // TODO: Handle Error Better
 
             return firstCandle.isBullish() &&
                 secondCandle.isBearish() &&

@@ -38,8 +38,8 @@ object SpinningTopPatternIndicator : Indicator {
             val secondCandle = data[i - 1]
             val thirdCandle = data[i]
 
-            val minWickSize = options.get(OHLCParameter.WICK_SIZE.toString())!! // TODO: Handle Error Better
-            val maxBodySize = options.get(OHLCParameter.MAX_BODY_HEIGHT.toString())!! // TODO: Handle Error Better
+            val minWickSize = options[OHLCParameter.WICK_SIZE.toString()]!! // TODO: Handle Error Better
+            val maxBodySize = options[OHLCParameter.MAX_BODY_HEIGHT.toString()]!! // TODO: Handle Error Better
 
             return firstCandle.isBearish() &&
                 secondCandle.isBullish() &&
@@ -68,8 +68,8 @@ object SpinningTopPatternIndicator : Indicator {
             val secondCandle = data[i - 1]
             val thirdCandle = data[i]
 
-            val minWickSize = options.get(OHLCParameter.WICK_SIZE.toString())!! // TODO: Handle Error Better
-            val maxBodySize = options.get(OHLCParameter.MAX_BODY_HEIGHT.toString())!! // TODO: Handle Error Better
+            val minWickSize = options[OHLCParameter.WICK_SIZE.toString()]!! // TODO: Handle Error Better
+            val maxBodySize = options[OHLCParameter.MAX_BODY_HEIGHT.toString()]!! // TODO: Handle Error Better
 
             return firstCandle.isBullish() &&
                 secondCandle.isBearish() &&
