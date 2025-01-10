@@ -8,7 +8,7 @@ object Accounting {
         portfolio: Portfolio,
     ): Portfolio {
         if (trade.type === TradeType.BUY) {
-            handleBuy(trade, portfolio)
+            return handleBuy(trade, portfolio)
         } else if (trade.type === TradeType.SELL) {
             throw NotImplementedError()
         } else if (trade.type === TradeType.INCOME) {
@@ -38,7 +38,7 @@ object Accounting {
         } else {
             val nonImpactedPositions =
                 previousPositions.filter {
-                    it.instrument != trade.instrument &&
+                    it.instrument != trade.instrument ||
                         it.counterInstrument != trade.counterInstrument
                 }
             val newPositionLots = previousPosition.lots + trade.toNewLot()
