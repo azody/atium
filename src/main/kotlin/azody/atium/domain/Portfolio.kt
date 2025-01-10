@@ -5,6 +5,7 @@ import java.math.BigDecimal
 data class Portfolio(
     val positions: List<Position>,
     val cashPosition: CashPosition,
+    val sellMethodology: SellMethodology = SellMethodology.FIFO,
 )
 
 data class Position(
@@ -29,6 +30,11 @@ data class CashPosition(
     val instrument: String,
     val quantity: BigDecimal,
 )
+
+enum class SellMethodology {
+    FIFO,
+    LIFO,
+}
 
 enum class Direction {
     LONG,

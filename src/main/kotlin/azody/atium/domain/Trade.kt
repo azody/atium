@@ -26,15 +26,17 @@ enum class TradeSubType {
     EXPIRY,
 }
 
-fun Trade.toNewPosition(): Position =
-    Position(
+fun Trade.toNewPosition(): Position {
+    val quantity = if (type === TradeType.SELL) -this.quantity else this.quantity
+    return Position(
         instrument = this.instrument,
         counterInstrument = this.counterInstrument,
         price = this.price,
-        quantity = this.quantity,
+        quantity = quantity,
         direction = this.direction,
         lots = listOf(this.toNewLot()),
     )
+}
 
 fun Trade.toNewLot(): Lot =
     Lot(
