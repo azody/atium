@@ -14,7 +14,7 @@ object Accounting {
         } else if (trade.type === TradeType.SELL) {
             return handleSell(trade, portfolio)
         } else if (trade.type === TradeType.INCOME) {
-            throw NotImplementedError()
+            return handleIncome(trade, portfolio)
         }
         return portfolio
     }
@@ -133,4 +133,13 @@ object Accounting {
             )
         }
     }
+
+    private fun handleIncome(
+        trade: Trade,
+        portfolio: Portfolio,
+    ): Portfolio =
+        Portfolio(
+            positions = portfolio.positions,
+            cashPosition = portfolio.cashPosition.applyTrade(trade),
+        )
 }
