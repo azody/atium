@@ -378,4 +378,35 @@ class AccountingTest :
             applPosition.price shouldBe BigDecimal(100)
             applPosition.quantity shouldBe BigDecimal(-1)
         }
+
+        test("AddTrade - Income on Portfolio") {
+
+            val startingPortfolio =
+                Portfolio(
+                    positions = listOf(),
+                    cashPosition =
+                        CashPosition(
+                            instrument = "USD",
+                            quantity = BigDecimal(1_000),
+                        ),
+                )
+
+            val newTrade =
+                Trade(
+                    businessTime = 1,
+                    instrument = "USD",
+                    counterInstrument = "USD",
+                    settlementInstrument = "USD",
+                    price = BigDecimal(1),
+                    quantity = BigDecimal(500),
+                    type = TradeType.INCOME,
+                    tradeSubType = TradeSubType.NONE,
+                    direction = Direction.LONG,
+                )
+
+            val resultingPortfolio = Accounting.addTrade(trade = newTrade, portfolio = startingPortfolio)
+
+            resultingPortfolio.cashPosition.quantity shouldBe BigDecimal(1_500)
+            resultingPortfolio.cashPosition.instrument shouldBe "USD"
+        }
     })
