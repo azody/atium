@@ -15,9 +15,9 @@ class HammerPatternIndicatorTest :
                 )
             val data =
                 listOf(
-                    OHLC(10.0, 12.0, 7.0, 8.0),
-                    OHLC(7.0, 8.0, 4.0, 8.0),
-                    OHLC(8.0, 15.0, 6.0, 12.0),
+                    OHLC(1, 10.0, 12.0, 7.0, 8.0),
+                    OHLC(1, 7.0, 8.0, 4.0, 8.0),
+                    OHLC(1, 8.0, 15.0, 6.0, 12.0),
                 )
             HammerPatternIndicator.bullIndicator(data, 2, options) shouldBe true
         }
@@ -29,9 +29,9 @@ class HammerPatternIndicatorTest :
                 )
             val data =
                 listOf(
-                    OHLC(10.0, 12.0, 7.0, 8.0),
-                    OHLC(7.0, 8.5, 4.0, 8.0),
-                    OHLC(8.0, 15.0, 6.0, 12.0),
+                    OHLC(1, 10.0, 12.0, 7.0, 8.0),
+                    OHLC(1, 7.0, 8.5, 4.0, 8.0),
+                    OHLC(1, 8.0, 15.0, 6.0, 12.0),
                 )
             HammerPatternIndicator.bullIndicator(data, 2, options) shouldBe false
         }
@@ -43,9 +43,9 @@ class HammerPatternIndicatorTest :
                 )
             val data =
                 listOf(
-                    OHLC(10.0, 12.0, 7.0, 8.0),
-                    OHLC(7.0, 8.0, 4.0, 8.0),
-                    OHLC(8.0, 15.0, 6.0, 12.0),
+                    OHLC(1, 10.0, 12.0, 7.0, 8.0),
+                    OHLC(1, 7.0, 8.0, 4.0, 8.0),
+                    OHLC(1, 8.0, 15.0, 6.0, 12.0),
                 )
             HammerPatternIndicator.bullIndicator(data, 1, options) shouldBe false
         }
@@ -57,9 +57,9 @@ class HammerPatternIndicatorTest :
                 )
             val data =
                 listOf(
-                    OHLC(8.0, 12.0, 7.0, 10.0),
-                    OHLC(11.0, 15.0, 10.0, 10.0),
-                    OHLC(12.0, 15.0, 6.0, 8.0),
+                    OHLC(1, 8.0, 12.0, 7.0, 10.0),
+                    OHLC(1, 11.0, 15.0, 10.0, 10.0),
+                    OHLC(1, 12.0, 15.0, 6.0, 8.0),
                 )
             HammerPatternIndicator.bearIndicator(data, 2, options) shouldBe true
         }
@@ -71,9 +71,9 @@ class HammerPatternIndicatorTest :
                 )
             val data =
                 listOf(
-                    OHLC(8.0, 12.0, 7.0, 10.0),
-                    OHLC(11.0, 15.0, 8.0, 8.0),
-                    OHLC(12.0, 15.0, 6.0, 8.0),
+                    OHLC(1, 8.0, 12.0, 7.0, 10.0),
+                    OHLC(1, 11.0, 15.0, 8.0, 8.0),
+                    OHLC(1, 12.0, 15.0, 6.0, 8.0),
                 )
             HammerPatternIndicator.bearIndicator(data, 2, options) shouldBe false
         }
@@ -85,9 +85,9 @@ class HammerPatternIndicatorTest :
                 )
             val data =
                 listOf(
-                    OHLC(8.0, 12.0, 7.0, 10.0),
-                    OHLC(11.0, 15.0, 10.0, 10.0),
-                    OHLC(12.0, 15.0, 6.0, 8.0),
+                    OHLC(1, 8.0, 12.0, 7.0, 10.0),
+                    OHLC(1, 11.0, 15.0, 10.0, 10.0),
+                    OHLC(1, 12.0, 15.0, 6.0, 8.0),
                 )
             HammerPatternIndicator.bearIndicator(data, 1, options) shouldBe false
         }

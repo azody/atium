@@ -10,7 +10,7 @@ class MaubozuPatternIndicatorTest :
         test("Positive Test for Bullish Marubozu Patter") {
             val data =
                 listOf(
-                    OHLC(10.0, 12.0, 10.0, 12.0),
+                    OHLC(1, 10.0, 12.0, 10.0, 12.0),
                 )
             MarubozuPatternIndicator.bullIndicator(data, 0) shouldBe true
         }
@@ -18,7 +18,7 @@ class MaubozuPatternIndicatorTest :
         test("Negative Test for Bullish Marubozu Patter") {
             val data =
                 listOf(
-                    OHLC(10.0, 12.0, 9.0, 12.0),
+                    OHLC(1, 10.0, 12.0, 9.0, 12.0),
                 )
             MarubozuPatternIndicator.bullIndicator(data, 0) shouldBe false
         }
@@ -31,7 +31,7 @@ class MaubozuPatternIndicatorTest :
         test("Positive Test for Bearish Marubozu Patter") {
             val data =
                 listOf(
-                    OHLC(12.0, 12.0, 10.0, 10.0),
+                    OHLC(1, 12.0, 12.0, 10.0, 10.0),
                 )
             MarubozuPatternIndicator.bearIndicator(data, 0) shouldBe true
         }
@@ -39,7 +39,7 @@ class MaubozuPatternIndicatorTest :
         test("Negative Test for Bearish Marubozu Patter") {
             val data =
                 listOf(
-                    OHLC(12.0, 12.0, 9.0, 10.0),
+                    OHLC(1, 12.0, 12.0, 9.0, 10.0),
                 )
             MarubozuPatternIndicator.bearIndicator(data, 0) shouldBe false
         }

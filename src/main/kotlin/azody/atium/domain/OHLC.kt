@@ -3,6 +3,7 @@ package azody.atium.domain
 import kotlin.math.abs
 
 data class OHLC(
+    val businessTime: Long,
     val open: Double,
     val high: Double,
     val low: Double,

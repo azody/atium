@@ -10,11 +10,11 @@ class QuintupletsPatternIndicatorTest :
         test("Positive Test for Bullish Quintuplets Pattern") {
             val data =
                 listOf(
-                    OHLC(1.0, 2.5, 0.5, 2.0),
-                    OHLC(2.0, 3.5, 1.5, 3.0),
-                    OHLC(3.0, 4.5, 2.5, 4.0),
-                    OHLC(4.0, 5.5, 3.5, 5.0),
-                    OHLC(5.0, 6.5, 4.5, 6.0),
+                    OHLC(1, 1.0, 2.5, 0.5, 2.0),
+                    OHLC(1, 2.0, 3.5, 1.5, 3.0),
+                    OHLC(1, 3.0, 4.5, 2.5, 4.0),
+                    OHLC(1, 4.0, 5.5, 3.5, 5.0),
+                    OHLC(1, 5.0, 6.5, 4.5, 6.0),
                 )
 
             QuintupletsPatternIndicator.bullIndicator(
@@ -27,11 +27,11 @@ class QuintupletsPatternIndicatorTest :
         test("Negative Test for Bullish Quintuplets Pattern") {
             val data =
                 listOf(
-                    OHLC(1.0, 2.5, 0.5, 2.0),
-                    OHLC(2.0, 3.5, 1.5, 3.0),
-                    OHLC(3.0, 4.5, 2.5, 4.0),
-                    OHLC(4.0, 5.5, 3.5, 5.0),
-                    OHLC(5.0, 6.5, 4.5, 6.0),
+                    OHLC(1, 1.0, 2.5, 0.5, 2.0),
+                    OHLC(1, 2.0, 3.5, 1.5, 3.0),
+                    OHLC(1, 3.0, 4.5, 2.5, 4.0),
+                    OHLC(1, 4.0, 5.5, 3.5, 5.0),
+                    OHLC(1, 5.0, 6.5, 4.5, 6.0),
                 )
 
             QuintupletsPatternIndicator.bullIndicator(
@@ -43,11 +43,11 @@ class QuintupletsPatternIndicatorTest :
         test("Negative Test for Bullish Quintuplets Pattern - Index Out of Bounds") {
             val data =
                 listOf(
-                    OHLC(1.0, 2.5, 0.5, 2.0),
-                    OHLC(2.0, 3.5, 1.5, 3.0),
-                    OHLC(3.0, 4.5, 2.5, 4.0),
-                    OHLC(4.0, 5.5, 3.5, 5.0),
-                    OHLC(5.0, 6.5, 4.5, 6.0),
+                    OHLC(1, 1.0, 2.5, 0.5, 2.0),
+                    OHLC(1, 2.0, 3.5, 1.5, 3.0),
+                    OHLC(1, 3.0, 4.5, 2.5, 4.0),
+                    OHLC(1, 4.0, 5.5, 3.5, 5.0),
+                    OHLC(1, 5.0, 6.5, 4.5, 6.0),
                 )
 
             QuintupletsPatternIndicator.bullIndicator(
@@ -59,11 +59,11 @@ class QuintupletsPatternIndicatorTest :
         test("Positive Test for Bearish Quintuplets Pattern") {
             val data =
                 listOf(
-                    OHLC(6.0, 6.5, 4.5, 5.0),
-                    OHLC(5.0, 5.5, 3.5, 4.0),
-                    OHLC(4.0, 4.5, 2.5, 3.0),
-                    OHLC(3.0, 3.5, 1.5, 2.0),
-                    OHLC(2.0, 2.5, 0.5, 1.0),
+                    OHLC(1, 6.0, 6.5, 4.5, 5.0),
+                    OHLC(1, 5.0, 5.5, 3.5, 4.0),
+                    OHLC(1, 4.0, 4.5, 2.5, 3.0),
+                    OHLC(1, 3.0, 3.5, 1.5, 2.0),
+                    OHLC(1, 2.0, 2.5, 0.5, 1.0),
                 )
 
             QuintupletsPatternIndicator.bearIndicator(
@@ -76,11 +76,11 @@ class QuintupletsPatternIndicatorTest :
         test("Negative Test for Bearish Quintuplets Pattern") {
             val data =
                 listOf(
-                    OHLC(6.0, 6.5, 4.5, 5.0),
-                    OHLC(5.0, 5.5, 3.5, 4.0),
-                    OHLC(4.0, 4.5, 2.5, 3.0),
-                    OHLC(3.0, 3.5, 1.5, 2.0),
-                    OHLC(2.0, 2.5, 0.5, 1.0),
+                    OHLC(1, 6.0, 6.5, 4.5, 5.0),
+                    OHLC(1, 5.0, 5.5, 3.5, 4.0),
+                    OHLC(1, 4.0, 4.5, 2.5, 3.0),
+                    OHLC(1, 3.0, 3.5, 1.5, 2.0),
+                    OHLC(1, 2.0, 2.5, 0.5, 1.0),
                 )
 
             QuintupletsPatternIndicator.bearIndicator(
@@ -92,11 +92,11 @@ class QuintupletsPatternIndicatorTest :
         test("Negative Test for Bearish Quintuplets Pattern - Index Out of Bounds") {
             val data =
                 listOf(
-                    OHLC(6.0, 6.5, 4.5, 5.0),
-                    OHLC(5.0, 5.5, 3.5, 4.0),
-                    OHLC(4.0, 4.5, 2.5, 3.0),
-                    OHLC(3.0, 3.5, 1.5, 2.0),
-                    OHLC(2.0, 2.5, 0.5, 1.0),
+                    OHLC(1, 6.0, 6.5, 4.5, 5.0),
+                    OHLC(1, 5.0, 5.5, 3.5, 4.0),
+                    OHLC(1, 4.0, 4.5, 2.5, 3.0),
+                    OHLC(1, 3.0, 3.5, 1.5, 2.0),
+                    OHLC(1, 2.0, 2.5, 0.5, 1.0),
                 )
 
             QuintupletsPatternIndicator.bearIndicator(

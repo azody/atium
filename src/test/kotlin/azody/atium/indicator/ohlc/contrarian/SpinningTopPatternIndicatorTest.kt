@@ -15,9 +15,9 @@ class SpinningTopPatternIndicatorTest :
                 )
             val data =
                 listOf(
-                    OHLC(10.0, 12.0, 4.0, 5.0),
-                    OHLC(7.0, 12.0, 4.0, 7.5),
-                    OHLC(5.0, 12.0, 4.0, 10.0),
+                    OHLC(1, 10.0, 12.0, 4.0, 5.0),
+                    OHLC(1, 7.0, 12.0, 4.0, 7.5),
+                    OHLC(1, 5.0, 12.0, 4.0, 10.0),
                 )
             SpinningTopPatternIndicator.bullIndicator(data, 2, options) shouldBe true
         }
@@ -29,9 +29,9 @@ class SpinningTopPatternIndicatorTest :
                 )
             val data =
                 listOf(
-                    OHLC(10.0, 12.0, 4.0, 5.0),
-                    OHLC(7.0, 12.0, 4.0, 8.5),
-                    OHLC(5.0, 12.0, 4.0, 10.0),
+                    OHLC(1, 10.0, 12.0, 4.0, 5.0),
+                    OHLC(1, 7.0, 12.0, 4.0, 8.5),
+                    OHLC(1, 5.0, 12.0, 4.0, 10.0),
                 )
             SpinningTopPatternIndicator.bullIndicator(data, 2, options) shouldBe false
         }
@@ -43,9 +43,9 @@ class SpinningTopPatternIndicatorTest :
                 )
             val data =
                 listOf(
-                    OHLC(10.0, 12.0, 4.0, 5.0),
-                    OHLC(7.0, 12.0, 4.0, 7.5),
-                    OHLC(5.0, 12.0, 4.0, 10.0),
+                    OHLC(1, 10.0, 12.0, 4.0, 5.0),
+                    OHLC(1, 7.0, 12.0, 4.0, 7.5),
+                    OHLC(1, 5.0, 12.0, 4.0, 10.0),
                 )
             SpinningTopPatternIndicator.bullIndicator(data, 1, options) shouldBe false
         }
@@ -57,9 +57,9 @@ class SpinningTopPatternIndicatorTest :
                 )
             val data =
                 listOf(
-                    OHLC(5.0, 12.0, 4.0, 10.0),
-                    OHLC(7.5, 12.0, 4.0, 7.0),
-                    OHLC(10.0, 12.0, 4.0, 5.0),
+                    OHLC(1, 5.0, 12.0, 4.0, 10.0),
+                    OHLC(1, 7.5, 12.0, 4.0, 7.0),
+                    OHLC(1, 10.0, 12.0, 4.0, 5.0),
                 )
             SpinningTopPatternIndicator.bearIndicator(data, 2, options) shouldBe true
         }
@@ -71,9 +71,9 @@ class SpinningTopPatternIndicatorTest :
                 )
             val data =
                 listOf(
-                    OHLC(5.0, 12.0, 4.0, 10.0),
-                    OHLC(8.5, 12.0, 4.0, 7.0),
-                    OHLC(10.0, 12.0, 4.0, 5.0),
+                    OHLC(1, 5.0, 12.0, 4.0, 10.0),
+                    OHLC(1, 8.5, 12.0, 4.0, 7.0),
+                    OHLC(1, 10.0, 12.0, 4.0, 5.0),
                 )
             SpinningTopPatternIndicator.bearIndicator(data, 2, options) shouldBe false
         }
@@ -85,9 +85,9 @@ class SpinningTopPatternIndicatorTest :
                 )
             val data =
                 listOf(
-                    OHLC(5.0, 12.0, 4.0, 10.0),
-                    OHLC(7.5, 12.0, 4.0, 7.0),
-                    OHLC(10.0, 12.0, 4.0, 5.0),
+                    OHLC(1, 5.0, 12.0, 4.0, 10.0),
+                    OHLC(1, 7.5, 12.0, 4.0, 7.0),
+                    OHLC(1, 10.0, 12.0, 4.0, 5.0),
                 )
             SpinningTopPatternIndicator.bearIndicator(data, 1, options) shouldBe false
         }

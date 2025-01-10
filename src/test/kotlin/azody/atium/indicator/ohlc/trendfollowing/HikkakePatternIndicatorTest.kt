@@ -11,11 +11,11 @@ class HikkakePatternIndicatorTest :
 
             val data =
                 listOf(
-                    OHLC(5.0, 12.0, 4.0, 10.0),
-                    OHLC(8.0, 9.0, 6.0, 4.0),
-                    OHLC(7.5, 8.5, 6.5, 7.0),
-                    OHLC(8.0, 9.0, 7.0, 8.5),
-                    OHLC(8.0, 15.0, 7.5, 18.0),
+                    OHLC(1, 5.0, 12.0, 4.0, 10.0),
+                    OHLC(1, 8.0, 9.0, 6.0, 4.0),
+                    OHLC(1, 7.5, 8.5, 6.5, 7.0),
+                    OHLC(1, 8.0, 9.0, 7.0, 8.5),
+                    OHLC(1, 8.0, 15.0, 7.5, 18.0),
                 )
             HikkakePatternIndicator.bullIndicator(data, 4) shouldBe true
         }
@@ -24,11 +24,11 @@ class HikkakePatternIndicatorTest :
 
             val data =
                 listOf(
-                    OHLC(5.0, 12.0, 4.0, 10.0),
-                    OHLC(8.0, 9.0, 6.0, 4.0),
-                    OHLC(7.5, 9.5, 6.5, 7.0),
-                    OHLC(8.0, 9.0, 7.0, 8.5),
-                    OHLC(8.0, 15.0, 7.5, 18.0),
+                    OHLC(1, 5.0, 12.0, 4.0, 10.0),
+                    OHLC(1, 8.0, 9.0, 6.0, 4.0),
+                    OHLC(1, 7.5, 9.5, 6.5, 7.0),
+                    OHLC(1, 8.0, 9.0, 7.0, 8.5),
+                    OHLC(1, 8.0, 15.0, 7.5, 18.0),
                 )
             HikkakePatternIndicator.bullIndicator(data, 4) shouldBe false
         }
@@ -36,10 +36,10 @@ class HikkakePatternIndicatorTest :
 
             val data =
                 listOf(
-                    OHLC(5.0, 12.0, 4.0, 10.0),
-                    OHLC(8.0, 9.0, 6.0, 4.0),
-                    OHLC(7.5, 9.5, 6.5, 7.0),
-                    OHLC(8.0, 9.0, 7.0, 8.5),
+                    OHLC(1, 5.0, 12.0, 4.0, 10.0),
+                    OHLC(1, 8.0, 9.0, 6.0, 4.0),
+                    OHLC(1, 7.5, 9.5, 6.5, 7.0),
+                    OHLC(1, 8.0, 9.0, 7.0, 8.5),
                 )
             HikkakePatternIndicator.bullIndicator(data, 3) shouldBe false
         }
@@ -48,11 +48,11 @@ class HikkakePatternIndicatorTest :
 
             val data =
                 listOf(
-                    OHLC(10.0, 12.0, 2.0, 3.0),
-                    OHLC(4.5, 9.0, 5.0, 5.5),
-                    OHLC(9.0, 6.0, 5.5, 6.0),
-                    OHLC(10.0, 10.0, 5.0, 8.0),
-                    OHLC(8.0, 8.0, 2.0, 3.0),
+                    OHLC(1, 10.0, 12.0, 2.0, 3.0),
+                    OHLC(1, 4.5, 9.0, 5.0, 5.5),
+                    OHLC(1, 9.0, 6.0, 5.5, 6.0),
+                    OHLC(1, 10.0, 10.0, 5.0, 8.0),
+                    OHLC(1, 8.0, 8.0, 2.0, 3.0),
                 )
             HikkakePatternIndicator.bearIndicator(data, 4) shouldBe true
         }
@@ -61,11 +61,11 @@ class HikkakePatternIndicatorTest :
 
             val data =
                 listOf(
-                    OHLC(10.0, 12.0, 2.0, 3.0),
-                    OHLC(4.5, 13.0, 5.0, 5.5),
-                    OHLC(9.0, 6.0, 5.5, 6.0),
-                    OHLC(10.0, 10.0, 5.0, 8.0),
-                    OHLC(8.0, 8.0, 2.0, 3.0),
+                    OHLC(1, 10.0, 12.0, 2.0, 3.0),
+                    OHLC(1, 4.5, 13.0, 5.0, 5.5),
+                    OHLC(1, 9.0, 6.0, 5.5, 6.0),
+                    OHLC(1, 10.0, 10.0, 5.0, 8.0),
+                    OHLC(1, 8.0, 8.0, 2.0, 3.0),
                 )
             HikkakePatternIndicator.bearIndicator(data, 4) shouldBe false
         }
@@ -74,10 +74,10 @@ class HikkakePatternIndicatorTest :
 
             val data =
                 listOf(
-                    OHLC(10.0, 12.0, 2.0, 3.0),
-                    OHLC(4.5, 13.0, 5.0, 5.5),
-                    OHLC(9.0, 6.0, 5.5, 6.0),
-                    OHLC(10.0, 10.0, 5.0, 8.0),
+                    OHLC(1, 10.0, 12.0, 2.0, 3.0),
+                    OHLC(1, 4.5, 13.0, 5.0, 5.5),
+                    OHLC(1, 9.0, 6.0, 5.5, 6.0),
+                    OHLC(1, 10.0, 10.0, 5.0, 8.0),
                 )
             HikkakePatternIndicator.bearIndicator(data, 3) shouldBe false
         }

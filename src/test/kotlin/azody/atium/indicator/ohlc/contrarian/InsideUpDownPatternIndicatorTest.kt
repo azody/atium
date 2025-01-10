@@ -14,9 +14,9 @@ class InsideUpDownPatternIndicatorTest :
                 )
             val data =
                 listOf(
-                    OHLC(10.0, 12.0, 3.0, 5.0),
-                    OHLC(6.0, 9.0, 5.0, 7.0),
-                    OHLC(6.0, 15.0, 5.0, 14.0),
+                    OHLC(1, 10.0, 12.0, 3.0, 5.0),
+                    OHLC(1, 6.0, 9.0, 5.0, 7.0),
+                    OHLC(1, 6.0, 15.0, 5.0, 14.0),
                 )
             InsideUpDownPatternIndicator.bullIndicator(data, 2, options) shouldBe true
         }
@@ -27,9 +27,9 @@ class InsideUpDownPatternIndicatorTest :
                 )
             val data =
                 listOf(
-                    OHLC(10.0, 12.0, 3.0, 5.0),
-                    OHLC(7.0, 9.0, 5.0, 6.0),
-                    OHLC(6.0, 15.0, 5.0, 14.0),
+                    OHLC(1, 10.0, 12.0, 3.0, 5.0),
+                    OHLC(1, 7.0, 9.0, 5.0, 6.0),
+                    OHLC(1, 6.0, 15.0, 5.0, 14.0),
                 )
             InsideUpDownPatternIndicator.bullIndicator(data, 2, options) shouldBe false
         }
@@ -40,9 +40,9 @@ class InsideUpDownPatternIndicatorTest :
                 )
             val data =
                 listOf(
-                    OHLC(10.0, 12.0, 3.0, 5.0),
-                    OHLC(6.0, 9.0, 5.0, 7.0),
-                    OHLC(6.0, 15.0, 5.0, 14.0),
+                    OHLC(1, 10.0, 12.0, 3.0, 5.0),
+                    OHLC(1, 6.0, 9.0, 5.0, 7.0),
+                    OHLC(1, 6.0, 15.0, 5.0, 14.0),
                 )
             InsideUpDownPatternIndicator.bullIndicator(data, 1, options) shouldBe false
         }
@@ -53,9 +53,9 @@ class InsideUpDownPatternIndicatorTest :
                 )
             val data =
                 listOf(
-                    OHLC(5.0, 12.0, 3.0, 10.0),
-                    OHLC(7.0, 9.0, 5.0, 6.0),
-                    OHLC(7.0, 15.0, 5.0, 4.0),
+                    OHLC(1, 5.0, 12.0, 3.0, 10.0),
+                    OHLC(1, 7.0, 9.0, 5.0, 6.0),
+                    OHLC(1, 7.0, 15.0, 5.0, 4.0),
                 )
             InsideUpDownPatternIndicator.bearIndicator(data, 2, options) shouldBe true
         }
@@ -66,9 +66,9 @@ class InsideUpDownPatternIndicatorTest :
                 )
             val data =
                 listOf(
-                    OHLC(5.0, 12.0, 3.0, 10.0),
-                    OHLC(7.0, 9.0, 5.0, 6.0),
-                    OHLC(7.0, 15.0, 5.0, 6.0),
+                    OHLC(1, 5.0, 12.0, 3.0, 10.0),
+                    OHLC(1, 7.0, 9.0, 5.0, 6.0),
+                    OHLC(1, 7.0, 15.0, 5.0, 6.0),
                 )
             InsideUpDownPatternIndicator.bearIndicator(data, 2, options) shouldBe false
         }
@@ -79,9 +79,9 @@ class InsideUpDownPatternIndicatorTest :
                 )
             val data =
                 listOf(
-                    OHLC(5.0, 12.0, 3.0, 10.0),
-                    OHLC(7.0, 9.0, 5.0, 6.0),
-                    OHLC(7.0, 15.0, 5.0, 4.0),
+                    OHLC(1, 5.0, 12.0, 3.0, 10.0),
+                    OHLC(1, 7.0, 9.0, 5.0, 6.0),
+                    OHLC(1, 7.0, 15.0, 5.0, 4.0),
                 )
             InsideUpDownPatternIndicator.bearIndicator(data, 1, options) shouldBe false
         }

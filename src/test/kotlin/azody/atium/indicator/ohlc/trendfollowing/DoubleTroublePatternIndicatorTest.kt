@@ -10,8 +10,8 @@ class DoubleTroublePatternIndicatorTest :
         test("Positive Test for Double Trouble Bullish Indicator") {
             val data =
                 listOf(
-                    OHLC(10.0, 14.0, 9.0, 13.0, mapOf(VolatilityIndicator.AVERAGE_TRUE_RANGE to 1.0)),
-                    OHLC(11.0, 18.0, 10.0, 16.0, mapOf(VolatilityIndicator.AVERAGE_TRUE_RANGE to 1.0)),
+                    OHLC(1, 10.0, 14.0, 9.0, 13.0, mapOf(VolatilityIndicator.AVERAGE_TRUE_RANGE to 1.0)),
+                    OHLC(1, 11.0, 18.0, 10.0, 16.0, mapOf(VolatilityIndicator.AVERAGE_TRUE_RANGE to 1.0)),
                 )
             DoubleTroublePatternIndicator.bullIndicator(data, 1) shouldBe true
         }
@@ -19,8 +19,8 @@ class DoubleTroublePatternIndicatorTest :
         test("Negative Test for Double Trouble Bullish Indicator") {
             val data =
                 listOf(
-                    OHLC(10.0, 14.0, 9.0, 13.0, mapOf(VolatilityIndicator.AVERAGE_TRUE_RANGE to 10.0)),
-                    OHLC(11.0, 18.0, 10.0, 16.0, mapOf(VolatilityIndicator.AVERAGE_TRUE_RANGE to 10.0)),
+                    OHLC(1, 10.0, 14.0, 9.0, 13.0, mapOf(VolatilityIndicator.AVERAGE_TRUE_RANGE to 10.0)),
+                    OHLC(1, 11.0, 18.0, 10.0, 16.0, mapOf(VolatilityIndicator.AVERAGE_TRUE_RANGE to 10.0)),
                 )
             DoubleTroublePatternIndicator.bullIndicator(data, 1) shouldBe false
         }
@@ -28,7 +28,7 @@ class DoubleTroublePatternIndicatorTest :
         test("Negative Test for Double Trouble Bullish Indicator - Index Out of Bounds") {
             val data =
                 listOf(
-                    OHLC(11.0, 18.0, 10.0, 16.0, mapOf(VolatilityIndicator.AVERAGE_TRUE_RANGE to 10.0)),
+                    OHLC(1, 11.0, 18.0, 10.0, 16.0, mapOf(VolatilityIndicator.AVERAGE_TRUE_RANGE to 10.0)),
                 )
             DoubleTroublePatternIndicator.bullIndicator(data, 1) shouldBe false
         }
@@ -36,8 +36,8 @@ class DoubleTroublePatternIndicatorTest :
         test("Positive Test for Double Trouble Bearish Indicator") {
             val data =
                 listOf(
-                    OHLC(10.0, 11.0, 7.0, 8.0, mapOf(VolatilityIndicator.AVERAGE_TRUE_RANGE to 1.0)),
-                    OHLC(9.0, 10.0, 4.0, 5.0, mapOf(VolatilityIndicator.AVERAGE_TRUE_RANGE to 1.0)),
+                    OHLC(1, 10.0, 11.0, 7.0, 8.0, mapOf(VolatilityIndicator.AVERAGE_TRUE_RANGE to 1.0)),
+                    OHLC(1, 9.0, 10.0, 4.0, 5.0, mapOf(VolatilityIndicator.AVERAGE_TRUE_RANGE to 1.0)),
                 )
             DoubleTroublePatternIndicator.bearIndicator(data, 1) shouldBe true
         }
@@ -45,8 +45,8 @@ class DoubleTroublePatternIndicatorTest :
         test("Negative Test for Double Trouble Bearish Indicator") {
             val data =
                 listOf(
-                    OHLC(10.0, 11.0, 7.0, 8.0, mapOf(VolatilityIndicator.AVERAGE_TRUE_RANGE to 10.0)),
-                    OHLC(9.0, 10.0, 4.0, 5.0, mapOf(VolatilityIndicator.AVERAGE_TRUE_RANGE to 10.0)),
+                    OHLC(1, 10.0, 11.0, 7.0, 8.0, mapOf(VolatilityIndicator.AVERAGE_TRUE_RANGE to 10.0)),
+                    OHLC(1, 9.0, 10.0, 4.0, 5.0, mapOf(VolatilityIndicator.AVERAGE_TRUE_RANGE to 10.0)),
                 )
             DoubleTroublePatternIndicator.bearIndicator(data, 1) shouldBe false
         }
@@ -54,7 +54,7 @@ class DoubleTroublePatternIndicatorTest :
         test("Negative Test for Double Trouble Bearish Indicator - Index Out of Bounds") {
             val data =
                 listOf(
-                    OHLC(11.0, 18.0, 10.0, 16.0, mapOf(VolatilityIndicator.AVERAGE_TRUE_RANGE to 10.0)),
+                    OHLC(1, 11.0, 18.0, 10.0, 16.0, mapOf(VolatilityIndicator.AVERAGE_TRUE_RANGE to 10.0)),
                 )
             DoubleTroublePatternIndicator.bearIndicator(data, 1) shouldBe false
         }

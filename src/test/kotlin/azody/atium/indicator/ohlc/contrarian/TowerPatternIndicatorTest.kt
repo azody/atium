@@ -14,11 +14,11 @@ class TowerPatternIndicatorTest :
                 )
             val data =
                 listOf(
-                    OHLC(10.0, 12.0, 3.0, 5.0),
-                    OHLC(6.0, 7.0, 3.0, 4.0),
-                    OHLC(5.0, 6.0, 2.0, 3.0),
-                    OHLC(6.0, 7.0, 3.0, 4.0),
-                    OHLC(5.0, 12.0, 3.0, 10.0),
+                    OHLC(1, 10.0, 12.0, 3.0, 5.0),
+                    OHLC(1, 6.0, 7.0, 3.0, 4.0),
+                    OHLC(1, 5.0, 6.0, 2.0, 3.0),
+                    OHLC(1, 6.0, 7.0, 3.0, 4.0),
+                    OHLC(1, 5.0, 12.0, 3.0, 10.0),
                 )
             TowerPatternIndicator.bullIndicator(data, 4, options) shouldBe true
         }
@@ -29,11 +29,11 @@ class TowerPatternIndicatorTest :
                 )
             val data =
                 listOf(
-                    OHLC(10.0, 12.0, 3.0, 5.0),
-                    OHLC(6.0, 7.0, 3.0, 4.0),
-                    OHLC(5.0, 6.0, 2.0, 3.0),
-                    OHLC(6.0, 7.0, 3.0, 4.0),
-                    OHLC(5.0, 12.0, 3.0, 6.0),
+                    OHLC(1, 10.0, 12.0, 3.0, 5.0),
+                    OHLC(1, 6.0, 7.0, 3.0, 4.0),
+                    OHLC(1, 5.0, 6.0, 2.0, 3.0),
+                    OHLC(1, 6.0, 7.0, 3.0, 4.0),
+                    OHLC(1, 5.0, 12.0, 3.0, 6.0),
                 )
             TowerPatternIndicator.bullIndicator(data, 4, options) shouldBe false
         }
@@ -44,11 +44,11 @@ class TowerPatternIndicatorTest :
                 )
             val data =
                 listOf(
-                    OHLC(10.0, 12.0, 3.0, 5.0),
-                    OHLC(6.0, 7.0, 3.0, 4.0),
-                    OHLC(5.0, 6.0, 2.0, 3.0),
-                    OHLC(6.0, 7.0, 3.0, 4.0),
-                    OHLC(5.0, 12.0, 3.0, 10.0),
+                    OHLC(1, 10.0, 12.0, 3.0, 5.0),
+                    OHLC(1, 6.0, 7.0, 3.0, 4.0),
+                    OHLC(1, 5.0, 6.0, 2.0, 3.0),
+                    OHLC(1, 6.0, 7.0, 3.0, 4.0),
+                    OHLC(1, 5.0, 12.0, 3.0, 10.0),
                 )
             TowerPatternIndicator.bullIndicator(data, 3, options) shouldBe false
         }
@@ -59,11 +59,11 @@ class TowerPatternIndicatorTest :
                 )
             val data =
                 listOf(
-                    OHLC(5.0, 12.0, 3.0, 10.0),
-                    OHLC(10.0, 17.0, 9.0, 12.0),
-                    OHLC(11.0, 18.0, 10.0, 13.0),
-                    OHLC(10.0, 17.0, 9.0, 12.0),
-                    OHLC(10.0, 12.0, 3.0, 5.0),
+                    OHLC(1, 5.0, 12.0, 3.0, 10.0),
+                    OHLC(1, 10.0, 17.0, 9.0, 12.0),
+                    OHLC(1, 11.0, 18.0, 10.0, 13.0),
+                    OHLC(1, 10.0, 17.0, 9.0, 12.0),
+                    OHLC(1, 10.0, 12.0, 3.0, 5.0),
                 )
             TowerPatternIndicator.bearIndicator(data, 4, options) shouldBe true
         }
@@ -74,11 +74,11 @@ class TowerPatternIndicatorTest :
                 )
             val data =
                 listOf(
-                    OHLC(5.0, 12.0, 3.0, 10.0),
-                    OHLC(10.0, 17.0, 9.0, 12.0),
-                    OHLC(9.0, 16.0, 8.0, 11.0),
-                    OHLC(10.0, 17.0, 9.0, 12.0),
-                    OHLC(10.0, 12.0, 3.0, 5.0),
+                    OHLC(1, 5.0, 12.0, 3.0, 10.0),
+                    OHLC(1, 10.0, 17.0, 9.0, 12.0),
+                    OHLC(1, 9.0, 16.0, 8.0, 11.0),
+                    OHLC(1, 10.0, 17.0, 9.0, 12.0),
+                    OHLC(1, 10.0, 12.0, 3.0, 5.0),
                 )
             TowerPatternIndicator.bearIndicator(data, 4, options) shouldBe false
         }
@@ -89,11 +89,11 @@ class TowerPatternIndicatorTest :
                 )
             val data =
                 listOf(
-                    OHLC(5.0, 12.0, 3.0, 10.0),
-                    OHLC(10.0, 17.0, 9.0, 12.0),
-                    OHLC(11.0, 18.0, 10.0, 13.0),
-                    OHLC(10.0, 17.0, 9.0, 12.0),
-                    OHLC(10.0, 12.0, 3.0, 5.0),
+                    OHLC(1, 5.0, 12.0, 3.0, 10.0),
+                    OHLC(1, 10.0, 17.0, 9.0, 12.0),
+                    OHLC(1, 11.0, 18.0, 10.0, 13.0),
+                    OHLC(1, 10.0, 17.0, 9.0, 12.0),
+                    OHLC(1, 10.0, 12.0, 3.0, 5.0),
                 )
             TowerPatternIndicator.bearIndicator(data, 3, options) shouldBe false
         }
