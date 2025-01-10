@@ -38,20 +38,20 @@ enum class Direction {
 fun CashPosition.applyTrade(trade: Trade): CashPosition {
     val tradeCashValue =
         if (trade.type === TradeType.SELL) {
-            -trade.price * trade.quantity
-        } else if (trade.type === TradeType.BUY) {
             trade.price * trade.quantity
+        } else if (trade.type === TradeType.BUY) {
+            -trade.price * trade.quantity
         } else {
             trade.quantity // Assumes Income
         }
 
     return CashPosition(
         instrument = instrument,
-        quantity = quantity - tradeCashValue,
+        quantity = quantity + tradeCashValue,
     )
 }
 
-fun List<Lot>.toPosition(): List<Position> {
+fun List<Lot>.toPositions(): List<Position> {
     if (this.isEmpty()) {
         return emptyList()
     }
@@ -62,7 +62,7 @@ fun List<Lot>.toPosition(): List<Position> {
 
             val totalQuantity = lots.sumOf { it.quantity }
             val averagePrice =
-                if (totalQuantity > BigDecimal.ZERO) {
+                if (totalQuantity != BigDecimal.ZERO) {
                     lots.sumOf { it.price * it.quantity } / totalQuantity
                 } else {
                     BigDecimal.ZERO

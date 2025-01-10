@@ -43,7 +43,7 @@ object Accounting {
                 }
             val newPositionLots = previousPosition.lots + trade.toNewLot()
             return Portfolio(
-                positions = nonImpactedPositions + newPositionLots.toPosition(),
+                positions = nonImpactedPositions + newPositionLots.toPositions(),
                 cashPosition = cashPosition.applyTrade(trade),
             )
         }
