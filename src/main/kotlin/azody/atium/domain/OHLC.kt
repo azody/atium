@@ -8,6 +8,7 @@ data class OHLC(
     val high: Double,
     val low: Double,
     val close: Double,
+    val volume: Double = 0.0,
     val volatilityIndicators: Map<VolatilityIndicator, Double> = emptyMap(),
 )
 
