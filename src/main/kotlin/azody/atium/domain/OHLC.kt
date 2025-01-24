@@ -3,7 +3,7 @@ package azody.atium.domain
 import kotlin.math.abs
 
 data class OHLC(
-    val businessTime: Long,
+    val businessTime: Long, // In candles business time is the close time
     val open: Double,
     val high: Double,
     val low: Double,
