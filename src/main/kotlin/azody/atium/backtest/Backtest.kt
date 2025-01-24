@@ -7,23 +7,22 @@ import java.math.BigDecimal
 object Backtest {
     /**
      * Runs a simple test that buys on a bull indicator and sells on a bear indicator
-     * Assumes a Starting balance of 1_000
+     * TODO: Missing: Exit Strategy
+     * TODO: Missing Quantity Logic
      */
     fun runSingleAssetBackTest(
-        startingPortfolio: Portfolio,
+        strategy: Strategy,
         data: List<OHLC>,
-        indicator: Indicator,
-        instrument: String,
-    ): Portfolio {
-        var portfolio = startingPortfolio
-
+    ): BackTestResults {
+        var resultingPortfolio = strategy.startingPortfolio
+        val trades = mutableListOf<Trade>()
         data.forEachIndexed { index, _ ->
 
-            if (indicator.bullIndicator(data, index)) {
+            if (strategy.indicator.bullIndicator(data, index)) {
                 val trade =
                     Trade(
                         businessTime = data[index + 1].businessTime,
-                        instrument = instrument,
+                        instrument = strategy.instrument,
                         counterInstrument = "USD",
                         settlementInstrument = "USD",
                         price = data[index + 1].open.toBigDecimal(),
@@ -32,23 +31,33 @@ object Backtest {
                         tradeSubType = TradeSubType.NONE,
                         direction = Direction.LONG,
                     )
-                portfolio = Accounting.addTrade(trade, portfolio)
-            } else if (indicator.bearIndicator(data, index)) {
-                val trade =
-                    Trade(
-                        businessTime = data[index + 1].businessTime,
-                        instrument = instrument,
-                        counterInstrument = "USD",
-                        settlementInstrument = "USD",
-                        price = data[index + 1].open.toBigDecimal(),
-                        quantity = BigDecimal(10),
-                        type = TradeType.SELL,
-                        tradeSubType = TradeSubType.NONE,
-                        direction = Direction.LONG,
-                    )
-                portfolio = Accounting.addTrade(trade, portfolio)
+                trades.add(trade)
+                resultingPortfolio = Accounting.addTrade(trade, resultingPortfolio)
+            } else if (strategy.indicator.bearIndicator(data, index)) {
+                val outstandingQuantity = resultingPortfolio.positions.filter { it.instrument == strategy.instrument }.sumOf { it.quantity }
+                if (outstandingQuantity >= BigDecimal(10) || strategy.allowShort) {
+                    val trade =
+                        Trade(
+                            businessTime = data[index + 1].businessTime,
+                            instrument = strategy.instrument,
+                            counterInstrument = "USD",
+                            settlementInstrument = "USD",
+                            price = data[index + 1].open.toBigDecimal(),
+                            quantity = BigDecimal(10),
+                            type = TradeType.SELL,
+                            tradeSubType = TradeSubType.NONE,
+                            direction = Direction.LONG,
+                        )
+                    trades.add(trade)
+                    resultingPortfolio = Accounting.addTrade(trade, resultingPortfolio)
+                }
             }
         }
-        return portfolio
+        return BackTestResults(
+            startingPortfolio = strategy.startingPortfolio,
+            resultingPortfolio = resultingPortfolio,
+            trades = trades,
+            finalValues = mapOf(strategy.instrument to data.last().close.toBigDecimal()),
+        )
     }
 }
