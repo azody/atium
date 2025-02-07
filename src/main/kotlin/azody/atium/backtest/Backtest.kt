@@ -14,14 +14,20 @@ object Backtest {
         strategy: Strategy,
         data: List<OHLC>,
     ): BackTestResults {
-        var resultingPortfolio = strategy.startingPortfolio
-        val trades = mutableListOf<Trade>()
+        val tradeSeries = mutableMapOf<Long, List<Trade>>()
+        val portfolioSeries = mutableMapOf<Long, Portfolio>()
+
+        var previousPortfolio = strategy.startingPortfolio
+
         data.forEachIndexed { index, _ ->
+            val newTrades = mutableListOf<Trade>() // Does Order Matter? Thinking Sells than buys but revisit
 
             if (strategy.indicator.bullIndicator(data, index)) {
+                val businessTime = data[index + 1].businessTime
+
                 val trade =
                     Trade(
-                        businessTime = data[index + 1].businessTime,
+                        businessTime = businessTime,
                         instrument = strategy.instrument,
                         counterInstrument = "USD",
                         settlementInstrument = "USD",
@@ -31,14 +37,15 @@ object Backtest {
                         tradeSubType = TradeSubType.NONE,
                         direction = Direction.LONG,
                     )
-                trades.add(trade)
-                resultingPortfolio = Accounting.addTrade(trade, resultingPortfolio)
+                tradeSeries[businessTime] = listOf(trade)
             } else if (strategy.indicator.bearIndicator(data, index)) {
-                val outstandingQuantity = resultingPortfolio.positions.filter { it.instrument == strategy.instrument }.sumOf { it.quantity }
+                val outstandingQuantity = previousPortfolio.positions.filter { it.instrument == strategy.instrument }.sumOf { it.quantity }
                 if (outstandingQuantity >= BigDecimal(10) || strategy.allowShort) {
+                    val businessTime = data[index + 1].businessTime
+
                     val trade =
                         Trade(
-                            businessTime = data[index + 1].businessTime,
+                            businessTime = businessTime,
                             instrument = strategy.instrument,
                             counterInstrument = "USD",
                             settlementInstrument = "USD",
@@ -48,16 +55,40 @@ object Backtest {
                             tradeSubType = TradeSubType.NONE,
                             direction = Direction.LONG,
                         )
-                    trades.add(trade)
-                    resultingPortfolio = Accounting.addTrade(trade, resultingPortfolio)
+                    tradeSeries[businessTime] = listOf(trade)
+                    previousPortfolio = Accounting.addTrade(trade, previousPortfolio)
                 }
             }
+
+            // Update Portfolio pricing and apply trades
+            var newPortfolio =
+                Portfolio(
+                    cashPosition = previousPortfolio.cashPosition,
+                    positions =
+                        previousPortfolio.positions.filter { it.instrument == strategy.instrument }.map {
+                            Position(
+                                instrument = it.instrument,
+                                counterInstrument = it.counterInstrument,
+                                price = data[index].close.toBigDecimal(),
+                                quantity = it.quantity,
+                                direction = it.direction,
+                                lots = it.lots,
+                            )
+                        },
+                    sellMethodology = previousPortfolio.sellMethodology,
+                )
+            val previousDayTrades = tradeSeries[data[index].businessTime] ?: emptyList()
+
+            previousDayTrades.forEach {
+                newPortfolio = Accounting.addTrade(it, newPortfolio)
+            }
+            portfolioSeries[data[index].businessTime] = newPortfolio
+            previousPortfolio = newPortfolio
         }
+
         return BackTestResults(
-            startingPortfolio = strategy.startingPortfolio,
-            resultingPortfolio = resultingPortfolio,
-            trades = trades,
-            finalValues = mapOf(strategy.instrument to data.last().close.toBigDecimal()),
+            portfolioSeries = portfolioSeries,
+            tradeSeries = tradeSeries,
         )
     }
 }
