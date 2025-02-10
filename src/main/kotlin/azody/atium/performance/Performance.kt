@@ -31,7 +31,7 @@ object Performance {
             )
         }
 
-        println("G/L: ${getPercentChange(firstPortfolio, lastPortfolio)}")
+        println("G/L: ${getPercentChange(firstPortfolio, lastPortfolio) * BigDecimal(100)} %")
         println("Hit Ratio: ${getHitRatio(trades)}")
     }
 
@@ -128,11 +128,13 @@ object Performance {
                 .sumOf {
                     it.price * it.quantity
                 }.add(startingPortfolio.cashPosition.quantity)
+        println("Starting Value: $totalStartingValue")
         val totalEndValue =
             endPortfolio.positions
                 .sumOf {
                     it.price * it.quantity
                 }.add(endPortfolio.cashPosition.quantity)
+        println("End Value: $totalEndValue")
 
         return (totalEndValue - totalStartingValue).divide(totalStartingValue, RoundingMode.HALF_UP)
     }
