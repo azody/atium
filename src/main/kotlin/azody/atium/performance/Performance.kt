@@ -19,7 +19,7 @@ object Performance {
         println("\tSell Trades: ${trades.filter { it.type == TradeType.SELL }}")
         println()
         println("Open Positions:")
-
+        println("\tCash: ${lastPortfolio.cashPosition.quantity}")
         lastPortfolio.positions.forEach {
             println(
                 "\tInstrument: ${it.instrument} Quantity: ${it.quantity} Price: ${
