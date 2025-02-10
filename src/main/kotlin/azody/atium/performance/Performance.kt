@@ -11,12 +11,15 @@ object Performance {
     // TODO: Only works with single asset at the moment
     fun printSummary(backTestResults: BackTestResults) {
         val trades = backTestResults.tradeSeries.values.flatten()
+        val firstPortfolio = backTestResults.portfolioSeries.minBy { it.key }.value
+        val lastPortfolio = backTestResults.portfolioSeries.maxBy { it.key }.value
+
         println("Number of Trades: ${trades.size}")
         println("\tBuy Trades: ${trades.filter { it.type == TradeType.BUY }}")
         println("\tSell Trades: ${trades.filter { it.type == TradeType.SELL }}")
         println()
         println("Open Positions:")
-        val lastPortfolio = backTestResults.portfolioSeries.maxBy { it.key }.value
+
         lastPortfolio.positions.forEach {
             println(
                 "\tInstrument: ${it.instrument} Quantity: ${it.quantity} Price: ${
@@ -28,6 +31,7 @@ object Performance {
             )
         }
 
+        println("G/L: ${getPercentChange(firstPortfolio, lastPortfolio)}")
         println("Hit Ratio: ${getHitRatio(trades)}")
     }
 
