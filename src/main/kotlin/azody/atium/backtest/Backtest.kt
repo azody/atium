@@ -32,13 +32,13 @@ object Backtest {
                         counterInstrument = "USD",
                         settlementInstrument = "USD",
                         price = data[index + 1].open.toBigDecimal(),
-                        quantity = BigDecimal(10),
+                        quantity = BigDecimal(1),
                         type = TradeType.BUY,
                         tradeSubType = TradeSubType.NONE,
                         direction = Direction.LONG,
                     )
                 if (!strategy.allowMargin) {
-                    val tradeCost = data[index + 1].open.toBigDecimal() * BigDecimal(10)
+                    val tradeCost = data[index + 1].open.toBigDecimal() * BigDecimal(1)
                     if (tradeCost < previousPortfolio.cashPosition.quantity) {
                         tradeSeries[businessTime] = listOf(trade)
                     }
@@ -48,7 +48,7 @@ object Backtest {
             } else if (strategy.indicator.bearIndicator(data, index)) {
                 val outstandingQuantity =
                     previousPortfolio.positions.filter { it.instrument == strategy.instrument }.sumOf { it.quantity }
-                if (outstandingQuantity >= BigDecimal(10) || strategy.allowShort) {
+                if (outstandingQuantity >= BigDecimal(1) || strategy.allowShort) {
                     val businessTime = data[index + 1].businessTime
 
                     val trade =
@@ -58,7 +58,7 @@ object Backtest {
                             counterInstrument = "USD",
                             settlementInstrument = "USD",
                             price = data[index + 1].open.toBigDecimal(),
-                            quantity = BigDecimal(10),
+                            quantity = BigDecimal(1),
                             type = TradeType.SELL,
                             tradeSubType = TradeSubType.NONE,
                             direction = Direction.LONG,

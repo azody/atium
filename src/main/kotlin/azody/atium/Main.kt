@@ -17,7 +17,7 @@ fun main(args: Array<String>) {
             startingPortfolio =
                 Portfolio(
                     positions = listOf(),
-                    cashPosition = CashPosition("USD", BigDecimal(1000)),
+                    cashPosition = CashPosition("USD", BigDecimal(250)),
                 ),
             indicator = BottlePatternIndicator,
             instrument = "UPRO",
