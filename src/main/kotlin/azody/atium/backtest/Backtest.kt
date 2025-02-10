@@ -22,6 +22,7 @@ object Backtest {
         data.forEachIndexed { index, _ ->
             val newTrades = mutableListOf<Trade>() // Does Order Matter? Thinking Sells than buys but revisit
 
+            // Add trades to next open
             if (strategy.indicator.bullIndicator(data, index)) {
                 val businessTime = data[index + 1].businessTime
 
@@ -39,7 +40,8 @@ object Backtest {
                     )
                 tradeSeries[businessTime] = listOf(trade)
             } else if (strategy.indicator.bearIndicator(data, index)) {
-                val outstandingQuantity = previousPortfolio.positions.filter { it.instrument == strategy.instrument }.sumOf { it.quantity }
+                val outstandingQuantity =
+                    previousPortfolio.positions.filter { it.instrument == strategy.instrument }.sumOf { it.quantity }
                 if (outstandingQuantity >= BigDecimal(10) || strategy.allowShort) {
                     val businessTime = data[index + 1].businessTime
 
@@ -56,7 +58,6 @@ object Backtest {
                             direction = Direction.LONG,
                         )
                     tradeSeries[businessTime] = listOf(trade)
-                    previousPortfolio = Accounting.addTrade(trade, previousPortfolio)
                 }
             }
 
