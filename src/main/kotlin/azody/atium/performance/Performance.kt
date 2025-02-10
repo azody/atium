@@ -9,7 +9,7 @@ import java.math.RoundingMode
 object Performance {
     // TODO: Only works with single asset at the moment
     fun printSummary(backTestResults: BackTestResults) {
-        val trades = backTestResults.tradeSeries.values.first()
+        val trades = backTestResults.tradeSeries.values.flatten()
         println("Number of Trades: ${trades.size}")
         println("\tBuy Trades: ${trades.filter { it.type == TradeType.BUY }}")
         println("\tSell Trades: ${trades.filter { it.type == TradeType.SELL }}")
@@ -18,10 +18,12 @@ object Performance {
         val lastPortfolio = backTestResults.portfolioSeries.maxBy { it.key }.value
         lastPortfolio.positions.forEach {
             println(
-                "\tInstrument: ${it.instrument} Quantity: ${it.quantity} Price: ${lastPortfolio.positions
-                    .firstOrNull { p ->
-                        p.instrument == it.instrument
-                    }?.price ?: -1}",
+                "\tInstrument: ${it.instrument} Quantity: ${it.quantity} Price: ${
+                    lastPortfolio.positions
+                        .firstOrNull { p ->
+                            p.instrument == it.instrument
+                        }?.price ?: -1
+                }",
             )
         }
 
@@ -98,6 +100,7 @@ object Performance {
                         matchedTrades++
                     }
                 }
+
                 TradeType.INCOME -> {}
             }
         }
