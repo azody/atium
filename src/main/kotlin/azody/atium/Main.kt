@@ -10,14 +10,14 @@ import azody.atium.performance.Performance
 import java.math.BigDecimal
 
 fun main(args: Array<String>) {
-    val ohlc = AlpacaMarketData.getOHLCData("UPRO", "2024-01-01", "2025-01-01", "1D")
+    val ohlc = AlpacaMarketData.getOHLCData("UPRO", "2020-01-01", "2025-01-01", "1D")
 
     val strategy =
         Strategy(
             startingPortfolio =
                 Portfolio(
                     positions = listOf(),
-                    cashPosition = CashPosition("USD", BigDecimal(500)),
+                    cashPosition = CashPosition("USD", BigDecimal(1000)),
                 ),
             indicator = BottlePatternIndicator,
             instrument = "UPRO",
