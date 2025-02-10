@@ -1,6 +1,7 @@
 package azody.atium.performance
 
 import azody.atium.backtest.BackTestResults
+import azody.atium.domain.Portfolio
 import azody.atium.domain.Trade
 import azody.atium.domain.TradeType
 import java.math.BigDecimal
@@ -112,5 +113,23 @@ object Performance {
         } else {
             (BigDecimal(profitableTrades) / BigDecimal(matchedTrades).setScale(16, RoundingMode.HALF_UP))
         }
+    }
+
+    fun getPercentChange(
+        startingPortfolio: Portfolio,
+        endPortfolio: Portfolio,
+    ): BigDecimal {
+        val totalStartingValue =
+            startingPortfolio.positions
+                .sumOf {
+                    it.price * it.quantity
+                }.add(startingPortfolio.cashPosition.quantity)
+        val totalEndValue =
+            endPortfolio.positions
+                .sumOf {
+                    it.price * it.quantity
+                }.add(endPortfolio.cashPosition.quantity)
+
+        return (totalEndValue - totalStartingValue).divide(totalStartingValue, RoundingMode.HALF_UP)
     }
 }
