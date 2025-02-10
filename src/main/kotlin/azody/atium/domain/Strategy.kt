@@ -5,4 +5,5 @@ data class Strategy(
     val indicator: Indicator,
     val instrument: String,
     val allowShort: Boolean = false,
+    val allowMargin: Boolean = false,
 )

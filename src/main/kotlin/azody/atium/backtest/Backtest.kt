@@ -24,7 +24,6 @@ object Backtest {
 
             if (strategy.indicator.bullIndicator(data, index)) {
                 val businessTime = data[index + 1].businessTime
-
                 val trade =
                     Trade(
                         businessTime = businessTime,
@@ -37,7 +36,14 @@ object Backtest {
                         tradeSubType = TradeSubType.NONE,
                         direction = Direction.LONG,
                     )
-                tradeSeries[businessTime] = listOf(trade)
+                if (!strategy.allowMargin) {
+                    val tradeCost = data[index + 1].open.toBigDecimal() * BigDecimal(10)
+                    if (tradeCost < previousPortfolio.cashPosition.quantity) {
+                        tradeSeries[businessTime] = listOf(trade)
+                    }
+                } else { // TODO: Long term implement margin logic, not a priority
+                    tradeSeries[businessTime] = listOf(trade)
+                }
             } else if (strategy.indicator.bearIndicator(data, index)) {
                 val outstandingQuantity = previousPortfolio.positions.filter { it.instrument == strategy.instrument }.sumOf { it.quantity }
                 if (outstandingQuantity >= BigDecimal(10) || strategy.allowShort) {
