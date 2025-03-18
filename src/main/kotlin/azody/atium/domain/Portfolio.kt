@@ -41,6 +41,12 @@ enum class Direction {
     SHORT,
 }
 
+fun Portfolio.getTotalValue(): BigDecimal =
+    this.positions
+        .sumOf {
+            it.price * it.quantity
+        }.add(this.cashPosition.quantity)
+
 fun CashPosition.applyTrade(trade: Trade): CashPosition {
     val tradeCashValue =
         if (trade.type === TradeType.SELL) {

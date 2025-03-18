@@ -20,11 +20,16 @@ object Backtest {
         var previousPortfolio = strategy.startingPortfolio
 
         data.forEachIndexed { index, _ ->
+
+            if (index >= data.size) {
+                return@forEachIndexed
+            }
+
             val newTrades = mutableListOf<Trade>() // Does Order Matter? Thinking Sells than buys but revisit
 
+            // Add trades to next open
             if (strategy.indicator.bullIndicator(data, index)) {
                 val businessTime = data[index + 1].businessTime
-
                 val trade =
                     Trade(
                         businessTime = businessTime,
@@ -32,15 +37,23 @@ object Backtest {
                         counterInstrument = "USD",
                         settlementInstrument = "USD",
                         price = data[index + 1].open.toBigDecimal(),
-                        quantity = BigDecimal(10),
+                        quantity = BigDecimal(1),
                         type = TradeType.BUY,
                         tradeSubType = TradeSubType.NONE,
                         direction = Direction.LONG,
                     )
-                tradeSeries[businessTime] = listOf(trade)
+                if (!strategy.allowMargin) {
+                    val tradeCost = data[index + 1].open.toBigDecimal() * BigDecimal(1)
+                    if (tradeCost < previousPortfolio.cashPosition.quantity) {
+                        tradeSeries[businessTime] = listOf(trade)
+                    }
+                } else { // TODO: Long term implement margin logic, not a priority
+                    tradeSeries[businessTime] = listOf(trade)
+                }
             } else if (strategy.indicator.bearIndicator(data, index)) {
-                val outstandingQuantity = previousPortfolio.positions.filter { it.instrument == strategy.instrument }.sumOf { it.quantity }
-                if (outstandingQuantity >= BigDecimal(10) || strategy.allowShort) {
+                val outstandingQuantity =
+                    previousPortfolio.positions.filter { it.instrument == strategy.instrument }.sumOf { it.quantity }
+                if (outstandingQuantity >= BigDecimal(1) || strategy.allowShort) {
                     val businessTime = data[index + 1].businessTime
 
                     val trade =
@@ -50,13 +63,12 @@ object Backtest {
                             counterInstrument = "USD",
                             settlementInstrument = "USD",
                             price = data[index + 1].open.toBigDecimal(),
-                            quantity = BigDecimal(10),
+                            quantity = BigDecimal(1),
                             type = TradeType.SELL,
                             tradeSubType = TradeSubType.NONE,
                             direction = Direction.LONG,
                         )
                     tradeSeries[businessTime] = listOf(trade)
-                    previousPortfolio = Accounting.addTrade(trade, previousPortfolio)
                 }
             }
 
