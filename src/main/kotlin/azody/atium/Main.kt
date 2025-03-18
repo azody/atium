@@ -10,7 +10,7 @@ import azody.atium.performance.Performance
 import java.math.BigDecimal
 
 fun main(args: Array<String>) {
-    val ohlc = AlpacaMarketData.getOHLCData("UPRO", "2020-01-01", "2025-01-01", "1D")
+    val ohlc = AlpacaMarketData.getOHLCData("GLD", "2024-11-01", "2025-03-18", "1Hour")
 
     val strategy =
         Strategy(
@@ -20,7 +20,7 @@ fun main(args: Array<String>) {
                     cashPosition = CashPosition("USD", BigDecimal(250)),
                 ),
             indicator = BottlePatternIndicator,
-            instrument = "UPRO",
+            instrument = "GLD",
         )
 
     val results = Backtest.runSingleAssetBackTest(strategy, ohlc)

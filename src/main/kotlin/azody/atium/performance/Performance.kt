@@ -107,7 +107,13 @@ object Performance {
         ) {
             BigDecimal.ZERO
         } else {
-            (BigDecimal(profitableTrades).setScale(16) / BigDecimal(matchedTrades).setScale(16, RoundingMode.HALF_UP)).stripTrailingZeros()
+            (
+                BigDecimal(profitableTrades).setScale(16) /
+                    BigDecimal(matchedTrades).setScale(
+                        16,
+                        RoundingMode.HALF_UP,
+                    )
+            ).stripTrailingZeros()
         }
     }
 
@@ -128,19 +134,37 @@ object Performance {
                 }.add(endPortfolio.cashPosition.quantity)
         println("End Value: $totalEndValue")
 
-        return (totalEndValue - totalStartingValue).setScale(16).divide(totalStartingValue, RoundingMode.HALF_UP).stripTrailingZeros()
+        return (totalEndValue - totalStartingValue)
+            .setScale(16)
+            .divide(totalStartingValue, RoundingMode.HALF_UP)
+            .stripTrailingZeros()
     }
 
     fun getMaxDrawdown(backTestResults: BackTestResults): BigDecimal {
         val portfolioValues = backTestResults.portfolioSeries.values.map { it.getTotalValue() }
         var maxDrawdown = BigDecimal.ZERO
         var currentMaximum = BigDecimal.ZERO
+
         portfolioValues.forEachIndexed { index, value ->
             if (index == 0) {
                 currentMaximum = value
+            } else {
+                // Update the maximum value if current value is higher
+                if (value > currentMaximum) {
+                    currentMaximum = value
+                }
+                // Calculate drawdown if current value is lower than maximum
+                else if (currentMaximum > BigDecimal.ZERO) {
+                    // Calculate current drawdown as percentage
+                    val drawdown = (currentMaximum - value).divide(currentMaximum, 16, RoundingMode.HALF_UP)
+                    // Update max drawdown if current drawdown is larger
+                    if (drawdown > maxDrawdown) {
+                        maxDrawdown = drawdown
+                    }
+                }
             }
         }
 
-        return BigDecimal.ZERO
+        return maxDrawdown
     }
 }

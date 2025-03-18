@@ -20,6 +20,11 @@ object Backtest {
         var previousPortfolio = strategy.startingPortfolio
 
         data.forEachIndexed { index, _ ->
+
+            if (index >= data.size) {
+                return@forEachIndexed
+            }
+
             val newTrades = mutableListOf<Trade>() // Does Order Matter? Thinking Sells than buys but revisit
 
             // Add trades to next open
