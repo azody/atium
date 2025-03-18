@@ -4,6 +4,7 @@ import azody.atium.backtest.BackTestResults
 import azody.atium.domain.Portfolio
 import azody.atium.domain.Trade
 import azody.atium.domain.TradeType
+import azody.atium.domain.getTotalValue
 import java.math.BigDecimal
 import java.math.RoundingMode
 
@@ -39,8 +40,8 @@ object Performance {
      * Calculates the hit ratio
      * Hit Ratio = (Number of Profitable Trades) / (Number of Total Trades)
      * Edge Cases
-     *  - Unmatched BUY trades left in the queue do not count towards the hit ratio
-     *  - No trades or matched BUYs results in a hit ratio of 0.0
+     *  - Unmatched BUY trades left in the queue do not count towards the hit ratio - Done
+     *  - No trades or matched BUYs results in a hit ratio of 0.0 - Done
      */
     fun getHitRatio(trades: List<Trade>): BigDecimal {
         val buyQueue = ArrayDeque<Trade>()
@@ -52,58 +53,49 @@ object Performance {
                 TradeType.BUY -> buyQueue.add(trade)
                 TradeType.SELL -> {
                     var remainingSellAmount = trade.quantity
+                    var totalBuyCost = BigDecimal.ZERO
+                    var totalSellRevenue = trade.quantity * trade.price
 
                     while (remainingSellAmount > BigDecimal.ZERO && buyQueue.isNotEmpty()) {
                         val buyTrade = buyQueue.removeFirst()
 
                         if (remainingSellAmount > buyTrade.quantity) {
                             // Fully match the BUY trade
-                            val buyCost = buyTrade.quantity * buyTrade.price
+                            totalBuyCost += buyTrade.quantity * buyTrade.price
                             val sellRevenue = trade.quantity * trade.price
-                            if (sellRevenue > buyCost) {
-                                profitableTrades++
-                            }
                             matchedTrades++
                             remainingSellAmount -= buyTrade.quantity
                         } else {
                             // Partially math the Buy Trade
                             val matchedAmount = remainingSellAmount
-                            val buyCost = matchedAmount * buyTrade.price
-                            val sellRevenue = matchedAmount * trade.price
-                            if (sellRevenue > buyCost) {
-                                profitableTrades++
-                            }
-                            matchedTrades++
+                            totalBuyCost += matchedAmount * buyTrade.price
 
                             // Update the remaining amount of BUY trade and put it back in the deque
                             val remainingBuyAmount = buyTrade.quantity - matchedAmount
-                            buyQueue.addFirst(
-                                Trade(
-                                    buyTrade.businessTime,
-                                    buyTrade.instrument,
-                                    buyTrade.counterInstrument,
-                                    buyTrade.settlementInstrument,
-                                    buyTrade.price,
-                                    remainingBuyAmount,
-                                    buyTrade.type,
-                                    buyTrade.tradeSubType,
-                                    buyTrade.direction,
-                                ),
-                            )
+                            if (remainingBuyAmount > BigDecimal.ZERO) {
+                                buyQueue.addFirst(
+                                    Trade(
+                                        buyTrade.businessTime,
+                                        buyTrade.instrument,
+                                        buyTrade.counterInstrument,
+                                        buyTrade.settlementInstrument,
+                                        buyTrade.price,
+                                        remainingBuyAmount,
+                                        buyTrade.type,
+                                        buyTrade.tradeSubType,
+                                        buyTrade.direction,
+                                    ),
+                                )
+                            }
                             remainingSellAmount = BigDecimal.ZERO
                         }
                     }
-                    if (buyQueue.isNotEmpty()) {
-                        val buyTrade = buyQueue.removeFirst()
-                        val buyCost = buyTrade.quantity * buyTrade.price
-                        val sellRevenue = trade.quantity * trade.price
 
-                        // Calculate profit/loss
-                        if (sellRevenue > buyCost) {
-                            profitableTrades++
-                        }
-                        matchedTrades++
+                    // Calculate profit/loss
+                    if (totalSellRevenue > totalBuyCost) {
+                        profitableTrades++
                     }
+                    matchedTrades++
                 }
 
                 TradeType.INCOME -> {}
@@ -115,7 +107,7 @@ object Performance {
         ) {
             BigDecimal.ZERO
         } else {
-            (BigDecimal(profitableTrades) / BigDecimal(matchedTrades).setScale(16, RoundingMode.HALF_UP))
+            (BigDecimal(profitableTrades).setScale(16) / BigDecimal(matchedTrades).setScale(16, RoundingMode.HALF_UP)).stripTrailingZeros()
         }
     }
 
@@ -136,6 +128,19 @@ object Performance {
                 }.add(endPortfolio.cashPosition.quantity)
         println("End Value: $totalEndValue")
 
-        return (totalEndValue - totalStartingValue).divide(totalStartingValue, RoundingMode.HALF_UP)
+        return (totalEndValue - totalStartingValue).setScale(16).divide(totalStartingValue, RoundingMode.HALF_UP).stripTrailingZeros()
+    }
+
+    fun getMaxDrawdown(backTestResults: BackTestResults): BigDecimal {
+        val portfolioValues = backTestResults.portfolioSeries.values.map { it.getTotalValue() }
+        var maxDrawdown = BigDecimal.ZERO
+        var currentMaximum = BigDecimal.ZERO
+        portfolioValues.forEachIndexed { index, value ->
+            if (index == 0) {
+                currentMaximum = value
+            }
+        }
+
+        return BigDecimal.ZERO
     }
 }

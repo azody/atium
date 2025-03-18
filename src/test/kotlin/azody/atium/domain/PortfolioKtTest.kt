@@ -7,6 +7,29 @@ import java.math.BigDecimal
 class PortfolioKtTest :
     FunSpec({
 
+        test("Get Total Value") {
+            val p =
+                Portfolio(
+                    positions =
+                        listOf(
+                            Position(
+                                instrument = "APPL",
+                                counterInstrument = "USD",
+                                price = BigDecimal(100),
+                                quantity = BigDecimal(2),
+                                direction = Direction.LONG,
+                                lots = listOf(), // Not relevant for this one
+                            ),
+                        ),
+                    cashPosition =
+                        CashPosition(
+                            instrument = "USD",
+                            quantity = BigDecimal(50),
+                        ),
+                )
+            p.getTotalValue() shouldBe BigDecimal(250)
+        }
+
         test("Cash Position Apply Trade - BUY") {
             val previousCashPosition =
                 CashPosition(
