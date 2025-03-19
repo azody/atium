@@ -1,6 +1,11 @@
 plugins {
+    application
     id("org.jetbrains.kotlin.jvm") version "2.1.0"
     kotlin("plugin.serialization") version "2.1.0"
+}
+
+application {
+    mainClass.set("azody.atium.MainKt")
 }
 
 repositories {
