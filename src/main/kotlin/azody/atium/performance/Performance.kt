@@ -9,93 +9,96 @@ import java.math.BigDecimal
 import java.math.RoundingMode
 import java.time.LocalDateTime
 
-object Performance {
-    fun printSummary(backTestResults: BackTestResults, priceData: List<Double>) {
-        val trades = backTestResults.tradeSeries.values.flatten()
-        val firstPortfolio = backTestResults.portfolioSeries.minBy { it.key }.value
-        val lastPortfolio = backTestResults.portfolioSeries.maxBy { it.key }.value
+data class StrategyMetrics(
+    val strategyName: String,
+    val totalTrades: Int,
+    val buyTrades: Int,
+    val sellTrades: Int,
+    val hitRatio: BigDecimal,
+    val strategyReturn: Double,
+    val outperformance: Double,
+    val maxDrawdown: BigDecimal
+)
 
-        // Calculate returns based on position value changes only
-        val strategyReturn = calculateStrategyReturn(backTestResults, priceData)
+object Performance {
+    fun calculateMetrics(backTestResults: BackTestResults, priceData: List<Double>, strategyName: String): StrategyMetrics {
+        val trades = backTestResults.tradeSeries.values.flatten()
+        
+        val strategyReturn = calculateStrategyReturn(trades, priceData)
         val assetReturn = getAssetReturn(priceData)
         val outperformance = strategyReturn - assetReturn
+        val maxDrawdown = getMaxDrawdown(backTestResults)
 
-        // Strategy Statistics
-        println("\nStrategy Statistics:")
-        println("Number of Trades: ${trades.size}")
-        println("\tBuy Trades: ${trades.filter { it.type == TradeType.BUY }.size}")
-        println("\tSell Trades: ${trades.filter { it.type == TradeType.SELL }.size}")
-        println("Hit Ratio: ${getHitRatio(trades)}")
+        return StrategyMetrics(
+            strategyName = strategyName,
+            totalTrades = trades.size,
+            buyTrades = trades.count { it.type == TradeType.BUY },
+            sellTrades = trades.count { it.type == TradeType.SELL },
+            hitRatio = getHitRatio(trades),
+            strategyReturn = strategyReturn,
+            outperformance = outperformance,
+            maxDrawdown = maxDrawdown
+        )
+    }
+
+    fun printStrategyComparison(metrics: List<StrategyMetrics>, assetReturn: Double) {
+        println("\nStrategy Comparison:")
+        println("Asset Buy & Hold Return: ${(assetReturn * 100).toBigDecimal().setScale(2, RoundingMode.HALF_UP)}%")
+        println("\nRanked by Outperformance:")
         
-        // Returns Comparison
-        println("\nReturns Comparison (excluding cash drag):")
-        println("Strategy Return: ${(strategyReturn * 100).toBigDecimal().setScale(2, RoundingMode.HALF_UP)}%")
-        println("Asset Return: ${(assetReturn * 100).toBigDecimal().setScale(2, RoundingMode.HALF_UP)}%")
-        println("Outperformance: ${(outperformance * 100).toBigDecimal().setScale(2, RoundingMode.HALF_UP)}%")
-
-        // Current Portfolio State
-        println("\nCurrent Portfolio State:")
-        println("\tCash: ${lastPortfolio.cashPosition.quantity}")
-        lastPortfolio.positions.forEach {
-            println(
-                "\tInstrument: ${it.instrument} Quantity: ${it.quantity} Price: ${
-                    lastPortfolio.positions
-                        .firstOrNull { p ->
-                            p.instrument == it.instrument
-                        }?.price ?: -1
-                }",
-            )
+        metrics.sortedByDescending { it.outperformance }.forEach { metric ->
+            println("\n${metric.strategyName}:")
+            println("Total Return: ${(metric.strategyReturn * 100).toBigDecimal().setScale(2, RoundingMode.HALF_UP)}%")
+            println("Outperformance: ${(metric.outperformance * 100).toBigDecimal().setScale(2, RoundingMode.HALF_UP)}%")
+            println("Hit Ratio: ${(metric.hitRatio * BigDecimal(100)).setScale(2, RoundingMode.HALF_UP)}%")
+            println("Max Drawdown: ${(metric.maxDrawdown * BigDecimal(100)).setScale(2, RoundingMode.HALF_UP)}%")
+            println("Trade Count: ${metric.totalTrades} (${metric.buyTrades} buys, ${metric.sellTrades} sells)")
         }
     }
 
-    private fun calculateStrategyReturn(backTestResults: BackTestResults, priceData: List<Double>): Double {
-        val trades = backTestResults.tradeSeries.values.flatten()
-        var totalReturn = 0.0
-        var currentPosition = 0.0
-        var lastBuyPrice = 0.0
+    private fun calculateStrategyReturn(trades: List<Trade>, priceData: List<Double>): Double {
+        if (trades.isEmpty() || priceData.isEmpty()) return 0.0
+        
+        var totalReturn = 1.0  // Start with 1.0 (100%) and multiply by (1 + return) for each period
+        var inPosition = false
+        var entryPrice = 0.0
 
-        // Process each trade to track position value changes
         for (trade in trades) {
             when (trade.type) {
                 TradeType.BUY -> {
-                    currentPosition += trade.quantity.toDouble()
-                    lastBuyPrice = trade.price.toDouble()
+                    if (!inPosition) {
+                        inPosition = true
+                        entryPrice = trade.price.toDouble()
+                    }
                 }
                 TradeType.SELL -> {
-                    if (currentPosition > 0 && lastBuyPrice > 0) {
-                        val tradeReturn = (trade.price.toDouble() - lastBuyPrice) / lastBuyPrice
-                        totalReturn += tradeReturn * (trade.quantity.toDouble() / currentPosition)
-                        currentPosition -= trade.quantity.toDouble()
+                    if (inPosition) {
+                        val periodReturn = (trade.price.toDouble() / entryPrice) - 1.0
+                        totalReturn *= (1.0 + periodReturn)
+                        inPosition = false
                     }
                 }
                 TradeType.INCOME -> {}
             }
         }
 
-        // Account for any open position using the last price
-        if (currentPosition > 0 && lastBuyPrice > 0 && priceData.isNotEmpty()) {
+        // Handle open position using last price
+        if (inPosition && priceData.isNotEmpty()) {
             val lastPrice = priceData.last()
-            val openPositionReturn = (lastPrice - lastBuyPrice) / lastBuyPrice
-            totalReturn += openPositionReturn
+            val periodReturn = (lastPrice / entryPrice) - 1.0
+            totalReturn *= (1.0 + periodReturn)
         }
 
-        return totalReturn
+        return totalReturn - 1.0  // Convert back to percentage return
     }
 
     private fun getAssetReturn(priceData: List<Double>): Double {
         if (priceData.size < 2) return 0.0
         val firstPrice = priceData.first()
         val lastPrice = priceData.last()
-        return (lastPrice - firstPrice) / firstPrice
+        return (lastPrice / firstPrice) - 1.0
     }
 
-    /**
-     * Calculates the hit ratio
-     * Hit Ratio = (Number of Profitable Trades) / (Number of Total Trades)
-     * Edge Cases
-     *  - Unmatched BUY trades left in the queue do not count towards the hit ratio - Done
-     *  - No trades or matched BUYs results in a hit ratio of 0.0 - Done
-     */
     fun getHitRatio(trades: List<Trade>): BigDecimal {
         val buyQueue = ArrayDeque<Trade>()
         var profitableTrades = 0
@@ -105,52 +108,14 @@ object Performance {
             when (trade.type) {
                 TradeType.BUY -> buyQueue.add(trade)
                 TradeType.SELL -> {
-                    var remainingSellAmount = trade.quantity
-                    var totalBuyCost = BigDecimal.ZERO
-                    var totalSellRevenue = trade.quantity * trade.price
-
-                    while (remainingSellAmount > BigDecimal.ZERO && buyQueue.isNotEmpty()) {
+                    if (buyQueue.isNotEmpty()) {
                         val buyTrade = buyQueue.removeFirst()
-
-                        if (remainingSellAmount > buyTrade.quantity) {
-                            // Fully match the BUY trade
-                            totalBuyCost += buyTrade.quantity * buyTrade.price
-                            val sellRevenue = trade.quantity * trade.price
-                            matchedTrades++
-                            remainingSellAmount -= buyTrade.quantity
-                        } else {
-                            // Partially math the Buy Trade
-                            val matchedAmount = remainingSellAmount
-                            totalBuyCost += matchedAmount * buyTrade.price
-
-                            // Update the remaining amount of BUY trade and put it back in the deque
-                            val remainingBuyAmount = buyTrade.quantity - matchedAmount
-                            if (remainingBuyAmount > BigDecimal.ZERO) {
-                                buyQueue.addFirst(
-                                    Trade(
-                                        buyTrade.businessTime,
-                                        buyTrade.instrument,
-                                        buyTrade.counterInstrument,
-                                        buyTrade.settlementInstrument,
-                                        buyTrade.price,
-                                        remainingBuyAmount,
-                                        buyTrade.type,
-                                        buyTrade.tradeSubType,
-                                        buyTrade.direction,
-                                    ),
-                                )
-                            }
-                            remainingSellAmount = BigDecimal.ZERO
+                        if (trade.price > buyTrade.price) {
+                            profitableTrades++
                         }
+                        matchedTrades++
                     }
-
-                    // Calculate profit/loss
-                    if (totalSellRevenue > totalBuyCost) {
-                        profitableTrades++
-                    }
-                    matchedTrades++
                 }
-
                 TradeType.INCOME -> {}
             }
         }
@@ -158,13 +123,10 @@ object Performance {
         return if (matchedTrades == 0) {
             BigDecimal.ZERO
         } else {
-            (
-                BigDecimal(profitableTrades).setScale(16) /
-                    BigDecimal(matchedTrades).setScale(
-                        16,
-                        RoundingMode.HALF_UP,
-                    )
-            ).stripTrailingZeros()
+            BigDecimal(profitableTrades)
+                .setScale(16)
+                .divide(BigDecimal(matchedTrades), RoundingMode.HALF_UP)
+                .stripTrailingZeros()
         }
     }
 

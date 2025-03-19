@@ -14,64 +14,90 @@ import azody.atium.visualization.ChartVisualizer
 import java.math.BigDecimal
 
 fun main(args: Array<String>) {
-    val ohlc = AlpacaMarketData.getOHLCData("SPY", "2024-06-01", "2025-03-18", "1Hour")
-
-    // Example 1: Using only profit/loss targets
-    val strategyProfitLoss =
-        Strategy(
-            startingPortfolio =
-                Portfolio(
-                    positions = listOf(),
-                    cashPosition = CashPosition("USD", BigDecimal(250)),
-                ),
-            indicator = BottlePatternIndicator,
-            instrument = "GLD",
-            profitTarget = 0.25,  // Exit at 5% profit
-            stopLoss = 0.10,      // Exit at 2% loss
-            exitStrategy = ExitStrategy.PROFIT_LOSS_TARGETS,
-            maxPositionSize = BigDecimal(3)  // Maximum of 3 units
-        )
-
-    // Example 2: Using only indicator signals (original behavior)
-    val strategyIndicator =
-        Strategy(
-            startingPortfolio =
-                Portfolio(
-                    positions = listOf(),
-                    cashPosition = CashPosition("USD", BigDecimal(10_000)),
-                ),
-            indicator = EuphoriaPatternIndicator,
-            instrument = "GLD",
-            exitStrategy = ExitStrategy.INDICATOR_SIGNAL,
-            maxPositionSize = BigDecimal(5)  // Maximum of 5 units (default)
-        )
-
-    // Example 3: Using both profit/loss targets and indicator signals
-    val strategyBoth =
-        Strategy(
-            startingPortfolio =
-                Portfolio(
-                    positions = listOf(),
-                    cashPosition = CashPosition("USD", BigDecimal(250)),
-                ),
-            indicator = BottlePatternIndicator,
-            instrument = "GLD",
-            profitTarget = 0.05,
-            stopLoss = 0.03,
-            exitStrategy = ExitStrategy.BOTH,
-            maxPositionSize = BigDecimal(2)  // Maximum of 2 units
-        )
-
-    // Choose which strategy to test
-    val strategy = strategyIndicator  // Change this to test different strategies
-
-    val results = Backtest.runSingleAssetBackTest(strategy, ohlc)
+    // Configure test parameters
+    val symbol = "IBIT"  // Asset to test
+    val startDate = "2024-01-01"
+    val endDate = "2025-03-18"
+    val timeframe = "1Hour"
     
-    // Print numerical summary
+    println("Testing strategies on $symbol from $startDate to $endDate ($timeframe timeframe)")
+    val ohlc = AlpacaMarketData.getOHLCData(symbol, startDate, endDate, timeframe)
     val priceData = ohlc.map { it.close }
-    Performance.printSummary(results, priceData)
+    
+    // Create base portfolio for all strategies
+    val basePortfolio = Portfolio(
+        positions = listOf(),
+        cashPosition = CashPosition("USD", BigDecimal(100))
+    )
 
-    // Visualize results
-    val timestamps = ohlc.map { it.businessTime }
-    ChartVisualizer.visualizeResults(results, priceData, timestamps)
+    // Define all strategies to test
+    val strategies = listOf(
+        Strategy(
+            startingPortfolio = basePortfolio,
+            indicator = BottlePatternIndicator,
+            instrument = symbol,
+            exitStrategy = ExitStrategy.INDICATOR_SIGNAL,
+            maxPositionSize = BigDecimal(5)
+        ) to "Bottle Pattern (Trend Following)",
+
+        Strategy(
+            startingPortfolio = basePortfolio,
+            indicator = EuphoriaPatternIndicator,
+            instrument = symbol,
+            exitStrategy = ExitStrategy.INDICATOR_SIGNAL,
+            maxPositionSize = BigDecimal(5)
+        ) to "Euphoria Pattern (Contrarian)",
+
+        Strategy(
+            startingPortfolio = basePortfolio,
+            indicator = EngulfingPatternIndicator,
+            instrument = symbol,
+            exitStrategy = ExitStrategy.INDICATOR_SIGNAL,
+            maxPositionSize = BigDecimal(5)
+        ) to "Engulfing Pattern (Contrarian)",
+
+        Strategy(
+            startingPortfolio = basePortfolio,
+            indicator = BottlePatternIndicator,
+            instrument = symbol,
+            profitTarget = 0.05,
+            stopLoss = 0.02,
+            exitStrategy = ExitStrategy.PROFIT_LOSS_TARGETS,
+            maxPositionSize = BigDecimal(5)
+        ) to "Bottle Pattern with 5% Profit / 2% Stop Loss",
+
+        Strategy(
+            startingPortfolio = basePortfolio,
+            indicator = BottlePatternIndicator,
+            instrument = symbol,
+            profitTarget = 0.10,
+            stopLoss = 0.05,
+            exitStrategy = ExitStrategy.BOTH,
+            maxPositionSize = BigDecimal(5)
+        ) to "Bottle Pattern with Both (10% Profit / 5% Stop Loss)"
+    )
+
+    // Test each strategy and collect metrics
+    val metrics = strategies.map { (strategy, name) ->
+        println("\nTesting strategy: $name")
+        val results = Backtest.runSingleAssetBackTest(strategy, ohlc)
+        Performance.calculateMetrics(results, priceData, name)
+    }
+
+    // Print comparison of all strategies
+    val assetReturn = if (priceData.size >= 2) {
+        (priceData.last() - priceData.first()) / priceData.first()
+    } else 0.0
+    
+    Performance.printStrategyComparison(metrics, assetReturn)
+
+    // Visualize the best performing strategy
+    val bestStrategy = metrics.maxByOrNull { it.outperformance }
+    if (bestStrategy != null) {
+        println("\nVisualizing best strategy: ${bestStrategy.strategyName}")
+        val bestStrategyIndex = metrics.indexOf(bestStrategy)
+        val results = Backtest.runSingleAssetBackTest(strategies[bestStrategyIndex].first, ohlc)
+        val timestamps = ohlc.map { it.businessTime }
+        ChartVisualizer.visualizeResults(results, priceData, timestamps)
+    }
 }
