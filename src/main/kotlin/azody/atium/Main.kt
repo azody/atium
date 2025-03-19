@@ -12,7 +12,7 @@ import azody.atium.visualization.ChartVisualizer
 import java.math.BigDecimal
 
 fun main(args: Array<String>) {
-    val ohlc = AlpacaMarketData.getOHLCData("GLD", "2024-01-01", "2025-03-18", "1Hour")
+    val ohlc = AlpacaMarketData.getOHLCData("UPRO", "2018-01-01", "2025-03-18", "1D")
 
     // Example 1: Using only profit/loss targets
     val strategyProfitLoss =
@@ -24,8 +24,8 @@ fun main(args: Array<String>) {
                 ),
             indicator = BottlePatternIndicator,
             instrument = "GLD",
-            profitTarget = 0.05,  // Exit at 5% profit
-            stopLoss = 0.02,      // Exit at 2% loss
+            profitTarget = 0.25,  // Exit at 5% profit
+            stopLoss = 0.10,      // Exit at 2% loss
             exitStrategy = ExitStrategy.PROFIT_LOSS_TARGETS,
             maxPositionSize = BigDecimal(3)  // Maximum of 3 units
         )
@@ -66,10 +66,10 @@ fun main(args: Array<String>) {
     val results = Backtest.runSingleAssetBackTest(strategy, ohlc)
     
     // Print numerical summary
-    Performance.printSummary(results)
+    val priceData = ohlc.map { it.close }
+    Performance.printSummary(results, priceData)
 
     // Visualize results
-    val priceData = ohlc.map { it.close }
     val timestamps = ohlc.map { it.businessTime }
     ChartVisualizer.visualizeResults(results, priceData, timestamps)
 }

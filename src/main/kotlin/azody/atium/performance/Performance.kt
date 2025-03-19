@@ -9,15 +9,16 @@ import java.math.BigDecimal
 import java.math.RoundingMode
 
 object Performance {
-    // TODO: Only works with single asset at the moment
-    fun printSummary(backTestResults: BackTestResults) {
+    fun printSummary(backTestResults: BackTestResults, priceData: List<Double>) {
         val trades = backTestResults.tradeSeries.values.flatten()
         val firstPortfolio = backTestResults.portfolioSeries.minBy { it.key }.value
         val lastPortfolio = backTestResults.portfolioSeries.maxBy { it.key }.value
 
+        // Strategy Performance
+        println("Strategy Performance:")
         println("Number of Trades: ${trades.size}")
-        println("\tBuy Trades: ${trades.filter { it.type == TradeType.BUY }}")
-        println("\tSell Trades: ${trades.filter { it.type == TradeType.SELL }}")
+        println("\tBuy Trades: ${trades.filter { it.type == TradeType.BUY }.size}")
+        println("\tSell Trades: ${trades.filter { it.type == TradeType.SELL }.size}")
         println()
         println("Open Positions:")
         println("\tCash: ${lastPortfolio.cashPosition.quantity}")
@@ -32,8 +33,28 @@ object Performance {
             )
         }
 
-        println("G/L: ${getPercentChange(firstPortfolio, lastPortfolio) * BigDecimal(100)} %")
+        val strategyReturn = getPercentChange(firstPortfolio, lastPortfolio)
+        println("Strategy G/L: ${strategyReturn * BigDecimal(100)} %")
         println("Hit Ratio: ${getHitRatio(trades)}")
+
+        // Asset Performance
+        if (priceData.isNotEmpty()) {
+            val assetReturn = getAssetReturn(priceData)
+            println("\nAsset Performance:")
+            println("Asset Return: ${assetReturn * 100} %")
+            
+            // Compare performance
+            val outperformance = (strategyReturn.toDouble() - assetReturn)
+            println("\nComparison:")
+            println("Strategy vs Asset: ${outperformance * 100} %")
+        }
+    }
+
+    private fun getAssetReturn(priceData: List<Double>): Double {
+        if (priceData.size < 2) return 0.0
+        val firstPrice = priceData.first()
+        val lastPrice = priceData.last()
+        return (lastPrice - firstPrice) / firstPrice
     }
 
     /**
@@ -102,9 +123,7 @@ object Performance {
             }
         }
 
-        return if (matchedTrades ==
-            0
-        ) {
+        return if (matchedTrades == 0) {
             BigDecimal.ZERO
         } else {
             (
