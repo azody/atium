@@ -21,6 +21,8 @@ dependencies {
 
     implementation("io.github.cdimascio:dotenv-kotlin:6.4.0")
 
+    implementation("org.knowm.xchart:xchart:3.8.7")
+
     testImplementation("io.kotest:kotest-runner-junit5:5.9.1")
     testImplementation("io.kotest:kotest-assertions-core:5.9.1")
 }

@@ -7,19 +7,34 @@ import azody.atium.domain.TradeType
 import azody.atium.domain.getTotalValue
 import java.math.BigDecimal
 import java.math.RoundingMode
+import java.time.LocalDateTime
 
 object Performance {
-    // TODO: Only works with single asset at the moment
-    fun printSummary(backTestResults: BackTestResults) {
+    fun printSummary(backTestResults: BackTestResults, priceData: List<Double>) {
         val trades = backTestResults.tradeSeries.values.flatten()
         val firstPortfolio = backTestResults.portfolioSeries.minBy { it.key }.value
         val lastPortfolio = backTestResults.portfolioSeries.maxBy { it.key }.value
 
+        // Calculate returns based on position value changes only
+        val strategyReturn = calculateStrategyReturn(backTestResults, priceData)
+        val assetReturn = getAssetReturn(priceData)
+        val outperformance = strategyReturn - assetReturn
+
+        // Strategy Statistics
+        println("\nStrategy Statistics:")
         println("Number of Trades: ${trades.size}")
-        println("\tBuy Trades: ${trades.filter { it.type == TradeType.BUY }}")
-        println("\tSell Trades: ${trades.filter { it.type == TradeType.SELL }}")
-        println()
-        println("Open Positions:")
+        println("\tBuy Trades: ${trades.filter { it.type == TradeType.BUY }.size}")
+        println("\tSell Trades: ${trades.filter { it.type == TradeType.SELL }.size}")
+        println("Hit Ratio: ${getHitRatio(trades)}")
+        
+        // Returns Comparison
+        println("\nReturns Comparison (excluding cash drag):")
+        println("Strategy Return: ${(strategyReturn * 100).toBigDecimal().setScale(2, RoundingMode.HALF_UP)}%")
+        println("Asset Return: ${(assetReturn * 100).toBigDecimal().setScale(2, RoundingMode.HALF_UP)}%")
+        println("Outperformance: ${(outperformance * 100).toBigDecimal().setScale(2, RoundingMode.HALF_UP)}%")
+
+        // Current Portfolio State
+        println("\nCurrent Portfolio State:")
         println("\tCash: ${lastPortfolio.cashPosition.quantity}")
         lastPortfolio.positions.forEach {
             println(
@@ -31,9 +46,47 @@ object Performance {
                 }",
             )
         }
+    }
 
-        println("G/L: ${getPercentChange(firstPortfolio, lastPortfolio) * BigDecimal(100)} %")
-        println("Hit Ratio: ${getHitRatio(trades)}")
+    private fun calculateStrategyReturn(backTestResults: BackTestResults, priceData: List<Double>): Double {
+        val trades = backTestResults.tradeSeries.values.flatten()
+        var totalReturn = 0.0
+        var currentPosition = 0.0
+        var lastBuyPrice = 0.0
+
+        // Process each trade to track position value changes
+        for (trade in trades) {
+            when (trade.type) {
+                TradeType.BUY -> {
+                    currentPosition += trade.quantity.toDouble()
+                    lastBuyPrice = trade.price.toDouble()
+                }
+                TradeType.SELL -> {
+                    if (currentPosition > 0 && lastBuyPrice > 0) {
+                        val tradeReturn = (trade.price.toDouble() - lastBuyPrice) / lastBuyPrice
+                        totalReturn += tradeReturn * (trade.quantity.toDouble() / currentPosition)
+                        currentPosition -= trade.quantity.toDouble()
+                    }
+                }
+                TradeType.INCOME -> {}
+            }
+        }
+
+        // Account for any open position using the last price
+        if (currentPosition > 0 && lastBuyPrice > 0 && priceData.isNotEmpty()) {
+            val lastPrice = priceData.last()
+            val openPositionReturn = (lastPrice - lastBuyPrice) / lastBuyPrice
+            totalReturn += openPositionReturn
+        }
+
+        return totalReturn
+    }
+
+    private fun getAssetReturn(priceData: List<Double>): Double {
+        if (priceData.size < 2) return 0.0
+        val firstPrice = priceData.first()
+        val lastPrice = priceData.last()
+        return (lastPrice - firstPrice) / firstPrice
     }
 
     /**
@@ -102,9 +155,7 @@ object Performance {
             }
         }
 
-        return if (matchedTrades ==
-            0
-        ) {
+        return if (matchedTrades == 0) {
             BigDecimal.ZERO
         } else {
             (

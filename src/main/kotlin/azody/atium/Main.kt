@@ -6,12 +6,15 @@ import azody.atium.domain.Portfolio
 import azody.atium.domain.Strategy
 import azody.atium.domain.ExitStrategy
 import azody.atium.indicator.ohlc.trendfollowing.BottlePatternIndicator
+import azody.atium.indicator.ohlc.contrarian.EngulfingPatternIndicator
+import azody.atium.indicator.ohlc.contrarian.EuphoriaPatternIndicator
 import azody.atium.marketdata.AlpacaMarketData
 import azody.atium.performance.Performance
+import azody.atium.visualization.ChartVisualizer
 import java.math.BigDecimal
 
 fun main(args: Array<String>) {
-    val ohlc = AlpacaMarketData.getOHLCData("GLD", "2024-01-01", "2025-03-18", "1Hour")
+    val ohlc = AlpacaMarketData.getOHLCData("SPY", "2024-06-01", "2025-03-18", "1Hour")
 
     // Example 1: Using only profit/loss targets
     val strategyProfitLoss =
@@ -23,8 +26,8 @@ fun main(args: Array<String>) {
                 ),
             indicator = BottlePatternIndicator,
             instrument = "GLD",
-            profitTarget = 0.05,  // Exit at 5% profit
-            stopLoss = 0.02,      // Exit at 2% loss
+            profitTarget = 0.25,  // Exit at 5% profit
+            stopLoss = 0.10,      // Exit at 2% loss
             exitStrategy = ExitStrategy.PROFIT_LOSS_TARGETS,
             maxPositionSize = BigDecimal(3)  // Maximum of 3 units
         )
@@ -35,9 +38,9 @@ fun main(args: Array<String>) {
             startingPortfolio =
                 Portfolio(
                     positions = listOf(),
-                    cashPosition = CashPosition("USD", BigDecimal(250)),
+                    cashPosition = CashPosition("USD", BigDecimal(10_000)),
                 ),
-            indicator = BottlePatternIndicator,
+            indicator = EuphoriaPatternIndicator,
             instrument = "GLD",
             exitStrategy = ExitStrategy.INDICATOR_SIGNAL,
             maxPositionSize = BigDecimal(5)  // Maximum of 5 units (default)
@@ -60,8 +63,15 @@ fun main(args: Array<String>) {
         )
 
     // Choose which strategy to test
-    val strategy = strategyProfitLoss  // Change this to test different strategies
+    val strategy = strategyIndicator  // Change this to test different strategies
 
     val results = Backtest.runSingleAssetBackTest(strategy, ohlc)
-    Performance.printSummary(results)
+    
+    // Print numerical summary
+    val priceData = ohlc.map { it.close }
+    Performance.printSummary(results, priceData)
+
+    // Visualize results
+    val timestamps = ohlc.map { it.businessTime }
+    ChartVisualizer.visualizeResults(results, priceData, timestamps)
 }
