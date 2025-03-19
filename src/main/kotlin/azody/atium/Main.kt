@@ -8,6 +8,7 @@ import azody.atium.domain.ExitStrategy
 import azody.atium.indicator.ohlc.trendfollowing.BottlePatternIndicator
 import azody.atium.marketdata.AlpacaMarketData
 import azody.atium.performance.Performance
+import azody.atium.visualization.ChartVisualizer
 import java.math.BigDecimal
 
 fun main(args: Array<String>) {
@@ -63,5 +64,12 @@ fun main(args: Array<String>) {
     val strategy = strategyProfitLoss  // Change this to test different strategies
 
     val results = Backtest.runSingleAssetBackTest(strategy, ohlc)
+    
+    // Print numerical summary
     Performance.printSummary(results)
+
+    // Visualize results
+    val priceData = ohlc.map { it.close }
+    val timestamps = ohlc.map { it.businessTime }
+    ChartVisualizer.visualizeResults(results, priceData, timestamps)
 }
